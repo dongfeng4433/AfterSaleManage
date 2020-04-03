@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>许可证</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/css/element/index.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style/common.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style/licence.css}"/>
+
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.shared.js}"></script>
+    <script th:src="@{/js/jquery.shared.html.js}"></script>
+    <script th:src="@{/js/vue.js}"></script>
+    <script th:src="@{/js/element/index.js}"></script>
+    <script th:src="@{/pageview/common/common.js}"></script>
+    <script th:src="@{/pageview/common/component.js}"></script>
+</head>
+
+<body>
+<div id="licence" v-cloak="true">
+    <!--头部-->
+    <nav-top></nav-top>
+    <!--内容-->
+    <div class="home-content">
+        <div class="btn">
+            <label>单位名称：</label>
+            <el-input v-model="jgdw_mc" style="width: 200px;" size="small" placeholder=""></el-input>
+            <label>许可证编号：</label>
+            <el-input v-model="xkz_bh" style="width: 200px;" size="small" placeholder=""></el-input>
+            <el-button type="primary" v-on:click="getDataList(false)">查询</el-button>
+            <el-button type="primary" v-on:click="addLicence(true)">新增</el-button>
+            <el-button type="upload" v-on:click="openUpload()">导入</el-button>
+        </div>
+        <div class="_table">
+            <el-table :data="dataList" border="true" style="width: 100%">
+                <el-table-column label="序号" width="50" align="center">
+                    <template slot-scope="scope">
+                        {{(page-1)*10+scope.$index+1}}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="lx_dm" label="许可证类型" width="80" align="center">
+                    <template slot-scope="scope">
+                        {{scope.row.lx_dm=='1'?'人力资源服务许可证':'劳务派遣经营许可证'}}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="lbzh" label="劳保证号" width="80" align="center"></el-table-column>
+                <el-table-column prop="xkz_bh" label="许可证编号" width="80" align="center"></el-table-column>
+                <el-table-column prop="jgdw_mc" label="机构单位名称" width="100" align="center"></el-table-column>
+                <el-table-column prop="tyshxydm" label="统一社会信用代码" width="100" align="center"></el-table-column>
+                <el-table-column prop="fddbr_fzr" label="法定代表人(责任人)" align="center"></el-table-column>
+                <el-table-column prop="lxdh" label="联系电话" width="80" align="center"></el-table-column>
+                <el-table-column prop="dzzs" label="地址" width="150" align="center"></el-table-column>
+                <el-table-column prop="jgxz" label="机构性质" align="center"></el-table-column>
+                <el-table-column prop="fwfw" label="服务范围" width="150" align="center"></el-table-column>
+                <el-table-column prop="fzrq" label="发证日期" align="center" :formatter="dateFormat"></el-table-column>
+                <el-table-column prop="yxrq_qs" label="有效期-起始" align="center" :formatter="dateFormat"></el-table-column>
+                <el-table-column prop="yxrq_jz" label="有效期-截止" align="center" :formatter="dateFormat"></el-table-column>
+                <el-table-column label="附件" width="80" align="center">
+                    <template slot-scope="scope">
+                        <img v-on:click="online(scope.row)" style="width: 80px;height: 80px;cursor: pointer" :src="'/Licence/queryFileInfo?fj_xh='+scope.row.fj_xh" />
+                    </template>
+                </el-table-column>
+                <el-table-column prop="lr_sj" label="录入时间" width="120" align="center"></el-table-column>
+                <el-table-column prop="lrry_mc" label="录入人" width="80" align="center"></el-table-column>
+                <el-table-column label="操作" width="150" align="center">
+                    <template slot-scope="scope">
+                        <el-button v-on:click="addLicence(false,scope.row)" type="text" size="small">编辑</el-button>
+                        <el-button v-on:click="deleteLicence(scope.row)" type="text" size="small">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </div>
+        <div class="block">
+            <el-pagination
+                    v-on:current-change="changePages"
+                    :current-page="page"
+                    :page-size="limit"
+                    layout="total, prev, pager, next, jumper"
+                    :total="total">
+            </el-pagination>
+        </div>
+    </div>
+    <!--添加-->
+    <el-dialog :title="title" :visible.sync="isDialog" width="800px" :close-on-click-modal="false" :close-on-press-escape="false" :before-close="closeDialog">
+        <div class="dialog-body">
+            <div class="add-item" >
+                <label>许可证类型<b style="color:red">*</b></label>
+                <div class="item-right">
+                    <el-select style="width: 200px;" v-model="params.lx_dm" placeholder="请选择">
+                        <el-option
+                                v-for="item in list"
+                                :key="item.lx_dm"
+                                :label="item.lx_mc"
+                                :value="item.lx_dm">
+                        </el-option>
+                    </el-select>
+                </div>
+                <label style="width: 64px;margin-left: 36px;">劳保证号</label>
+                <div class="item-right">
+                    <el-input v-model="params.lbzh" style="width: 200px;" placeholder=""></el-input>
+                </div>
+            </div>
+            <div class="add-item" >
+                <label>机构单位名称<b style="color:red">*</b></label>
+                <div class="item-right">
+                    <el-input v-model="params.jgdw_mc" style="width: 200px;" placeholder=""></el-input>
+                </div>
+                <label style="width: 64px;margin-left: 36px;">许可证编号<b style="color:red">*</b></label>
+                <div class="item-right">
+                    <el-input v-model="params.xkz_bh" style="width: 200px;" placeholder=""></el-input>
+                </div>
+            </div>
+            <div class="add-item" >
+                <label>统一社会信用代码</label>
+                <div class="item-right">
+                    <el-input v-model="params.tyshxydm" style="width: 200px;" placeholder=""></el-input>
+                </div>
+                <label style="width: 64px;margin-left: 36px;">地址住所</label>
+                <div class="item-right">
+                    <el-input v-model="params.dzzs" style="width: 200px;" placeholder=""></el-input>
+                </div>
+            </div>
+
+            <div class="add-item" >
+                <label>法定代表人(负责人)</label>
+                <div class="item-right">
+                    <el-input v-model="params.fddbr_fzr" style="width: 200px;" placeholder=""></el-input>
+                </div>
+                <label style="width: 64px;margin-left: 36px;">注册资本（万元）</label>
+                <div class="item-right">
+                    <el-input v-model="params.zczb_je" type="number" style="width: 200px;" placeholder=""></el-input>
+                </div>
+            </div>
+            <div class="add-item" >
+                <label>机构性质</label>
+                <div class="item-right">
+                    <el-input v-model="params.jgxz" style="width: 200px;" placeholder=""></el-input>
+                </div>
+                <label style="width: 64px;margin-left: 36px;">许可文号</label>
+                <div class="item-right">
+                    <el-input v-model="params.xkwh" style="width: 200px;" placeholder=""></el-input>
+                </div>
+            </div>
+            <div class="add-item" >
+                <label>联系电话</label>
+                <div class="item-right">
+                    <el-input v-model="params.lxdh" style="width: 200px;" placeholder=""></el-input>
+                </div>
+                <label style="width: 64px;margin-left: 36px;">发证日期<b style="color:red">*</b></label>
+                <div class="item-right">
+                    <el-date-picker
+                            style="width: 200px;"
+                            v-model="params.fzrq"
+                            type="date"
+                            format="yyyy-MM-dd"
+                            value-format="yyyy-MM-dd"
+                            placeholder="请选择">
+                    </el-date-picker>
+                </div>
+            </div>
+            <div class="add-item" >
+                <label>有效日期起始</label>
+                <div class="item-right">
+                    <el-date-picker
+                            style="width: 200px;"
+                            v-model="params.yxrq_qs"
+                            type="date"
+                            format="yyyy-MM-dd"
+                            value-format="yyyy-MM-dd"
+                            placeholder="请选择">
+                    </el-date-picker>
+                </div>
+                <label style="width: 64px;margin-left: 36px;">有效日期截止</label>
+                <div class="item-right">
+                    <el-date-picker
+                            style="width: 200px;"
+                            v-model="params.yxrq_jz"
+                            type="date"
+                            format="yyyy-MM-dd"
+                            value-format="yyyy-MM-dd"
+                            placeholder="请选择">
+                    </el-date-picker>
+                </div>
+            </div>
+            <div class="add-item">
+                <label>服务范围<b style="color:red">*</b></label>
+                <div class="item-right">
+                    <el-input class="item-textarea" type="textarea" :rows="2" placeholder="" v-model="params.fwfw"></el-input>
+                </div>
+            </div>
+            <div class="add-item" v-show="true">
+                <label>附件</label>
+                <div class="item-right">
+                    <el-upload style="width: 500px;"
+                               ref="upload"
+                               class="upload-demo btn btnBom"
+                               action="/Home/uploadFjxxFile"
+                               :before-upload="handlePre"
+                               :on-remove="handleRemove"
+                               :on-success="handleSuccess"
+                               multiple="true">
+                        <el-button size="small" type="primary">点击上传</el-button>
+                        <div slot="tip" class="el-upload__tip">上传总文件大小不能超过 10MB!</div>
+                    </el-upload>
+                </div>
+            </div>
+        </div>
+        <div slot="footer" class="dialog-footer btn btnBom">
+            <el-button v-on:click="closeDialog">取消</el-button>
+            <el-button type="primary" v-on:click="ok">确定</el-button>
+        </div>
+    </el-dialog>
+
+    <el-dialog :title="title" :visible.sync="isImportDialog" width="400px" :close-on-click-modal="false" :close-on-press-escape="false" :before-close="closeDialog">
+        <div class="dialog-body">
+            <div class="add-item" v-show="true">
+                <label>导入Excel</label>
+                <div class="item-right">
+                    <el-upload style="width: 500px;"
+                               ref="upload"
+                               class="upload-demo btn btnBom"
+                               action="/Home/uploadFjxxFile"
+                               :before-upload="handlePre"
+                               :on-success="handleSuccess2"
+                               multiple="false">
+                        <el-button size="small" type="primary">选择文件</el-button>
+                        <div slot="tip" class="el-upload__tip">上传总文件大小不能超过 10MB!</div>
+                    </el-upload>
+                </div>
+            </div>
+        </div>
+        <div slot="footer" class="dialog-footer btn btnBom">
+            <el-button v-on:click="closeUpload">取消</el-button>
+            <el-button type="primary" v-on:click="okImport">确定</el-button>
+        </div>
+    </el-dialog>
+</div>
+</body>
+
+<script th:src="@{/pageview/licence/LicenceViewPage.js}"></script>
+</html>

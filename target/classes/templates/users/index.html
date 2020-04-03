@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>用户管理</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/css/element/index.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style/common.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style/common_search.css}"/>
+
+    <link rel="stylesheet" th:href="@{/css/style/users.css}"/>
+
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.shared.js}"></script>
+    <script th:src="@{/js/jquery.shared.html.js}"></script>
+    <script th:src="@{/js/vue.js}"></script>
+    <script th:src="@{/js/element/index.js}"></script>
+    <script th:src="@{/pageview/common/common.js}"></script>
+    <script th:src="@{/pageview/common/component.js}"></script>
+</head>
+
+<body>
+<div id="users" v-cloak="true">
+    <!--头部-->
+    <nav-top></nav-top>
+    <!--内容-->
+    <div class="home-content">
+        <div class="btn">
+            <label>名称：</label>
+            <el-input v-model="mc" style="width: 150px;" size="small" placeholder=""></el-input>
+            <label style="margin-left: 10px;">手机号：</label>
+            <el-input v-model="sj_hm" style="width: 150px;" size="small" placeholder=""></el-input>
+            <el-button type="primary" v-on:click="getDataList(false)">查询</el-button>
+
+            <el-button plain="" v-on:click="addUsersBtn(false, false)">添加账号</el-button>
+            <el-button type="success" plain="" v-on:click="addBmBtn">添加部门</el-button>
+            <el-button type="info" plain="" v-on:click="addJsBtn" >添加角色</el-button>
+        </div>
+        <div class="_table">
+            <el-table :data="dataList" border="true" style="width: 100%">
+                <el-table-column label="序号" width="55" align="center">
+                    <template slot-scope="scope">
+                        {{(page-1)*10+scope.$index+1}}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="yhm" label="账号" align="center"></el-table-column>
+                <el-table-column prop="mc" label="名称" align="center"></el-table-column>
+                <el-table-column prop="sj_hm" label="手机号" align="center"></el-table-column>
+                <el-table-column prop="lr_sj" label="登记时间" align="center"></el-table-column>
+                <el-table-column label="操作" width="180" align="center">
+                    <template slot-scope="scope">
+                        <el-button v-on:click="addUsersBtn(true, scope.row)" class="textGreen" type="text" size="small">编辑</el-button>
+                        <el-button v-on:click="setMenuBtn(scope.row)" type="text" size="small">设置菜单</el-button>
+                        <el-button v-on:click="deleteUser(scope.row)" type="text" size="small">删除账号</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </div>
+        <div class="block">
+            <el-pagination
+                    v-on:current-change="changePages"
+                    :current-page="page"
+                    :page-size="limit"
+                    layout="total, prev, pager, next, jumper"
+                    :total="total">
+            </el-pagination>
+        </div>
+    </div>
+    <!--添加 编辑-->
+    <el-dialog :title="title" :visible.sync="isAdd" width="400px" :close-on-click-modal="false" :close-on-press-escape="false">
+        <div class="dialog-body" style="padding-top: 3px;">
+            <div class="add-item" v-if="!ry_xh">
+                <label>登录账号：<b style="color:red">*</b></label>
+                <el-input v-model="params.yhm" style="width: 250px;" size="small" placeholder=""></el-input>
+            </div>
+            <div class="add-item">
+                <label>显示名称：<b style="color:red">*</b></label>
+                <el-input v-model="params.mc" style="width: 250px;" size="small" placeholder=""></el-input>
+            </div>
+            <div class="add-item" v-if="!ry_xh">
+                <label>密码：<b style="color:red">*</b></label>
+                <el-input v-model="params.mm" style="width: 250px;" size="small" placeholder=""></el-input>
+            </div>
+            <div class="add-item">
+                <!--style="margin-bottom: 3px;"-->
+                <label>手机号：</label>
+                <el-input v-model="params.sj_hm" style="width: 250px;" size="small" placeholder=""></el-input>
+            </div>
+            <div class="add-item" v-if="!ry_xh">
+                <label>部门：</label>
+                <el-select style="width: 200px;" v-model="params.bm_dm" multiple="true" filterable="true" collapse-tags="true" placeholder="请选择">
+                    <el-option
+                            v-for="item in bmdms"
+                            :key="item.bm_dm"
+                            :label="item.mc"
+                            :value="item.bm_dm">
+                    </el-option>
+                </el-select>
+            </div>
+            <div class="add-item" v-if="!ry_xh">
+                <label>角色：</label>
+                <el-select style="width: 200px;" v-model="params.js_dm" multiple="true" filterable="true" collapse-tags="true" placeholder="请选择">
+                    <el-option
+                            v-for="item in jsdms"
+                            :key="item.js_dm"
+                            :label="item.mc"
+                            :value="item.js_dm">
+                    </el-option>
+                </el-select>
+            </div>
+
+        </div>
+        <div slot="footer" class="dialog-footer btn btnBom">
+            <el-button v-on:click="isAdd = false">取消</el-button>
+            <el-button type="primary" v-on:click="addUsers">保存</el-button>
+        </div>
+    </el-dialog>
+    <!--设置菜单-->
+    <el-dialog title="设置菜单" :visible.sync="isMenu" width="500px" :close-on-click-modal="false" :close-on-press-escape="false">
+        <div v-show="false" class="dialog-body" style="padding: 30px 20px;">
+            <el-checkbox-group v-model="menuParams.xtmk_dms">
+                <el-checkbox label="1">历史记录</el-checkbox>
+                <el-checkbox label="2">用户管理</el-checkbox>
+                <el-checkbox label="3">信息核验</el-checkbox>
+                <el-checkbox label="4">小程序工单查询</el-checkbox>
+                <el-checkbox label="5">营业执照检索</el-checkbox>
+                <el-checkbox v-if="false" label="6">批管同步</el-checkbox>
+                <el-checkbox v-if="false" label="7">绩效考核平台</el-checkbox>
+                <el-checkbox label="8">许可证管理</el-checkbox>
+            </el-checkbox-group>
+        </div>
+        <el-tree
+                :data="menuParams.menuTreeData"
+                show-checkbox
+                node-key="id"
+                ref="menu_tree"
+                :default-expanded-keys="[]"
+                :default-checked-keys="[]"
+                :props="defaultProps">
+        </el-tree>
+
+        <div slot="footer" class="dialog-footer btn btnBom">
+            <el-button v-on:click="isMenu = false">取消</el-button>
+            <el-button type="primary" v-on:click="setMenu">保存</el-button>
+        </div>
+    </el-dialog>
+    <!--部门-->
+    <el-dialog :title="title" :visible.sync="isBmAdd" width="400px" :close-on-click-modal="false" :close-on-press-escape="false">
+        <div class="dialog-body" style="padding-top: 3px;">
+            <div class="add-item">
+                <label>名称：<b style="color:red">*</b></label>
+                <el-input v-model="bmmc" style="width: 250px;" size="small" placeholder=""></el-input>
+            </div>
+        </div>
+        <div slot="footer" class="dialog-footer btn btnBom">
+            <el-button v-on:click="isBmAdd = false">取消</el-button>
+            <el-button type="primary" v-on:click="addBm">保存</el-button>
+        </div>
+    </el-dialog>
+    <!--角色-->
+    <el-dialog :title="title" :visible.sync="isJsAdd" width="400px" :close-on-click-modal="false" :close-on-press-escape="false">
+        <div class="dialog-body" style="padding-top: 3px;">
+            <div class="add-item">
+                <label>名称：<b style="color:red">*</b></label>
+                <el-input v-model="jsmc" style="width: 250px;" size="small" placeholder=""></el-input>
+            </div>
+        </div>
+        <div slot="footer" class="dialog-footer btn btnBom">
+            <el-button v-on:click="isJsAdd = false">取消</el-button>
+            <el-button type="primary" v-on:click="addJs">保存</el-button>
+        </div>
+    </el-dialog>
+
+</div>
+</body>
+
+<script th:src="@{/pageview/users/UsersViewPage.js}"></script>
+</html>

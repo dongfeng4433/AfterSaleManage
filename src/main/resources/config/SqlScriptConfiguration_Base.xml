@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SQLScripts>
+	<Item Id="SelectT_SQBL_GDJBXX">
+		<Value>
+			<![CDATA[SELECT A.* FROM T_SQBL_GDJBXX A WHERE (1=1)]]>
+		</Value>
+		<OrderBy><![CDATA[SQSJFSSJ DESC]]></OrderBy>
+	</Item>
+
+	<Item Id="SelectT_SYS_USERINFO">
+		<Value>
+			<![CDATA[SELECT A.* FROM T_SYS_USERINFO A WHERE (1=1)]]>
+		</Value>
+		<OrderBy><![CDATA[CREATE_TIME DESC]]></OrderBy>
+	</Item>
+
+	<Item Id="SelectT_TX_DX_DXFSJL">
+		<Value>
+			<![CDATA[SELECT A.* FROM T_TX_DX_DXFSJL A WHERE (1=1)]]>
+		</Value>
+		<OrderBy><![CDATA[LR_SJ DESC]]></OrderBy>
+	</Item>
+
+	<Item Id="SelectT_TX_TZTXJL">
+		<Value>
+			<![CDATA[SELECT A.* FROM T_TX_TZTXJL A WHERE (1=1)]]>
+		</Value>
+		<OrderBy><![CDATA[SX_SJ DESC]]></OrderBy>
+	</Item>
+
+	<Item Id="SelectT_TX_TZTXJL_2_RY">
+		<Value>
+			<![CDATA[SELECT A.* FROM T_TX_TZTXJL_2_RY A WHERE (1=1)]]>
+		</Value>
+		<OrderBy><![CDATA[CL_SJ DESC]]></OrderBy>
+	</Item>
+
+	<Item Id="SelectT_XT_AQ_ZHXX">
+		<Value>
+			<![CDATA[SELECT A.* FROM T_XT_AQ_ZHXX A WHERE (1=1)]]>
+		</Value>
+		<OrderBy><![CDATA[XG_SJ DESC]]></OrderBy>
+	</Item>
+
+	<Item Id="SelectT_XT_GY_FJXX">
+		<Value>
+			<![CDATA[SELECT A.* FROM T_XT_GY_FJXX A WHERE (1=1)]]>
+		</Value>
+		<OrderBy><![CDATA[SX_SJ DESC]]></OrderBy>
+	</Item>
+
+	<Item Id="SelectT_XT_QX_BM">
+		<Value>
+			<![CDATA[SELECT A.* FROM T_XT_QX_BM A WHERE (1=1)]]>
+		</Value>
+		<OrderBy><![CDATA[LR_SJ DESC]]></OrderBy>
+	</Item>
+
+	<Item Id="SelectT_XT_QX_JS">
+		<Value>
+			<![CDATA[SELECT A.* FROM T_XT_QX_JS A WHERE (1=1)]]>
+		</Value>
+		<OrderBy><![CDATA[LR_SJ DESC]]></OrderBy>
+	</Item>
+
+	<Item Id="SelectT_XT_QX_RY_2_BM">
+		<Value>
+			<![CDATA[SELECT A.* FROM T_XT_QX_RY_2_BM A WHERE (1=1)]]>
+		</Value>
+		<OrderBy><![CDATA[LR_SJ DESC]]></OrderBy>
+	</Item>
+
+	<Item Id="SelectT_XT_QX_RY_2_JS">
+		<Value>
+			<![CDATA[SELECT A.* FROM T_XT_QX_RY_2_JS A WHERE (1=1)]]>
+		</Value>
+		<OrderBy><![CDATA[LR_SJ DESC]]></OrderBy>
+	</Item>
+
+	<Item Id="SelectT_XT_QX_RY_2_XTMK">
+		<Value>
+			<![CDATA[SELECT A.* FROM T_XT_QX_RY_2_XTMK A WHERE (1=1)]]>
+		</Value>
+		<OrderBy><![CDATA[LR_SJ DESC]]></OrderBy>
+	</Item>
+
+	<Item Id="SelectT_XT_QX_XTJS_2_XTMK">
+		<Value>
+			<![CDATA[SELECT A.* FROM T_XT_QX_XTJS_2_XTMK A WHERE (1=1)]]>
+		</Value>
+		<OrderBy><![CDATA[LR_SJ DESC]]></OrderBy>
+	</Item>
+
+	<Item Id="SelectT_XT_QX_XTMK">
+		<Value>
+			<![CDATA[SELECT A.* FROM T_XT_QX_XTMK A WHERE (1=1)]]>
+		</Value>
+		<OrderBy><![CDATA[LR_SJ DESC]]></OrderBy>
+	</Item>
+
+	<Item Id="SelectT_XT_WXYH">
+		<Value>
+			<![CDATA[SELECT A.* FROM T_XT_WXYH A WHERE (1=1)]]>
+		</Value>
+		<OrderBy><![CDATA[CREATE_TIME DESC]]></OrderBy>
+	</Item>
+
+	<Item Id="SelectT_YW_XXLR">
+		<Value>
+			<![CDATA[SELECT A.* FROM T_YW_XXLR A WHERE (1=1)]]>
+		</Value>
+		<OrderBy><![CDATA[HF_SJ DESC]]></OrderBy>
+	</Item>
+
+	<Item Id="SelectT_YW_XXLR_2_RY">
+		<Value>
+			<![CDATA[SELECT A.* FROM T_YW_XXLR_2_RY A WHERE (1=1)]]>
+		</Value>
+	</Item>
+
+</SQLScripts>

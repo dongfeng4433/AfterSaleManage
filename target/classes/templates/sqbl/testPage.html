@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>工单基本信息1</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+	<link rel="stylesheet" th:href="@{/css/bootstrap-table.min.css}"/>
+	<link rel="stylesheet" th:href="@{/css/bootstrap-dialog.css}"/>
+	<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+<form id="uploadForm" enctype="multipart/form-data">
+	文件:<input id="file" type="file" name="file"/>
+</form>
+<button id="upload">上传文件</button>
+</body>
+<script type="text/javascript">
+    $(function () {
+        $("#upload").click(function () {
+            var formData = new FormData($('#uploadForm')[0]);
+            $.ajax({
+                type: 'post',
+                url: "http://192.168.0.125:8015/FileService/uploadFile?jd-token=64CB27123CB64388897506E11FD027BB",
+                data: formData,
+                cache: false,
+                processData: false,
+                contentType: false,
+            }).success(function (data) {
+                alert(data);
+            }).error(function () {
+                alert("上传失败");
+            });
+        });
+    });
+</script>
+</html>

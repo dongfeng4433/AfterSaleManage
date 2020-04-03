@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>工单查询</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/css/element/index.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style/common.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style/external.css}"/>
+
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.shared.js}"></script>
+    <script th:src="@{/js/jquery.shared.html.js}"></script>
+    <script th:src="@{/js/vue.js}"></script>
+    <script th:src="@{/js/element/index.js}"></script>
+    <script th:src="@{/pageview/common/common.js}"></script>
+    <script th:src="@{/pageview/common/component.js}"></script>
+</head>
+
+<body>
+<div id='external' v-cloak="true">
+    <nav-top></nav-top>
+    <div class="home-content">
+<!--        <img class="logOut" th:src="@{/img/out.png}" v-on:click="logOut()"/>-->
+        <div class="search">
+            <label>工单编号：</label>
+            <el-input v-model="gdbh" style="width: 200px;" size="small" placeholder=""></el-input>
+            <label style="margin-left: 12px;">诉求内容：</label>
+            <el-input v-model="nr" style="width: 200px;" size="small" placeholder=""></el-input>
+        </div>
+        <div class="btn">
+            <el-button type="primary" v-on:click="getDataList(false)">查询</el-button>
+            <el-button type="primary" v-on:click="exprot()">导出</el-button>
+        </div>
+        <div class="_table">
+            <el-table :data="dataList" border="true" style="width: 100%" tooltip-effect="light">
+                <el-table-column prop="gdbh" label="工单编号" align="center" width="115px"></el-table-column>
+                <el-table-column prop="hfhm" label="回访号码" align="center" width="100px"></el-table-column>
+                <el-table-column prop="sqlx_dm" label="诉求类型" align="center" :show-overflow-tooltip="true"></el-table-column>
+                <el-table-column prop="sqrxm" label="诉求人姓名" align="center" width="90px"></el-table-column>
+                <el-table-column prop="sqrhm" label="诉求人号码" align="center" width="100px"></el-table-column>
+                <el-table-column prop="sqnr" label="诉求内容" align="center" :show-overflow-tooltip="true"></el-table-column>
+                <el-table-column prop="sqrdz" label="诉求人地址" align="center" :show-overflow-tooltip="true"></el-table-column>
+                <el-table-column prop="sqsjfssj" label="发生时间" align="center" width="140px"></el-table-column>
+                <el-table-column prop="sqsjfsdz" label="事件发生地" align="center" :show-overflow-tooltip="true"></el-table-column>
+                <el-table-column prop="jd_mc" label="街道名称" align="center" :show-overflow-tooltip="true"></el-table-column>
+                <el-table-column prop="sq_mc" label="社区名称" align="center" :show-overflow-tooltip="true"></el-table-column>
+                <el-table-column prop="wxq_mc" label="微信群名称" align="center" :show-overflow-tooltip="true"></el-table-column>
+                <el-table-column prop="wxh" label="微信号" align="center" :show-overflow-tooltip="true"></el-table-column>
+                <el-table-column prop="tb_bj" label="是否推送" align="center" :show-overflow-tooltip="true"></el-table-column>
+            </el-table>
+        </div>
+        <div class="block">
+            <el-pagination
+                    v-on:current-change="changePages"
+                    :current-page="page"
+                    :page-size="limit"
+                    layout="total, prev, pager, next, jumper"
+                    :total="total">
+            </el-pagination>
+        </div>
+    </div>
+   </div>
+</body>
+<script th:src="@{/pageview/gd/GdViewPage.js}"></script>
+</html>

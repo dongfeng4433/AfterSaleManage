@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>主数据 - 客户  可以是个人也可以是企业</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/css/element/index.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style/common.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style/common_search.css}"/>
+
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.shared.js}"></script>
+    <script th:src="@{/js/jquery.shared.html.js}"></script>
+    <script th:src="@{/js/vue.js}"></script>
+    <script th:src="@{/js/element/index.js}"></script>
+    <script th:src="@{/pageview/common/common.js}"></script>
+    <script th:src="@{/pageview/common/component.js}"></script>
+    <style type="text/css">#customer{ width:100%; height:100%; }</style>
+</head>
+
+<body>
+<div id="customer" v-cloak="true">
+    <!--头部-->
+    <nav-top></nav-top>
+    <!--内容-->
+    <div class="home-content">
+        <div class="btn">
+			<label>名称：</label>
+			<el-input v-model="name" style="width: 150px;" size="small" placeholder=""></el-input>
+			<label>简称：</label>
+			<el-input v-model="short_name" style="width: 150px;" size="small" placeholder=""></el-input>
+			<label>联系电话：</label>
+			<el-input v-model="telephone_number" style="width: 150px;" size="small" placeholder=""></el-input>
+
+            <el-button type="primary" v-on:click="getDataList(false)">查询</el-button>
+			<el-button plain="" v-on:click="addCustomerBtn(false, false)">添加客户</el-button>
+
+        </div>
+        <div class="_table">
+            <el-table :data="dataList" border="true" style="width: 100%">
+                <el-table-column label="序号" width="55" align="center">
+                    <template slot-scope="scope">
+                        {{(page-1)*10+scope.$index+1}}
+                    </template>
+                </el-table-column>
+				<el-table-column prop="name" label="名称" align="center"></el-table-column>
+				<el-table-column prop="short_name" label="简称" align="center"></el-table-column>
+				<el-table-column prop="address" label="地址" align="center"></el-table-column>
+				<el-table-column prop="type_code" label="类型编码 1 企业 2 个人 3 事业单位 9其他" align="center"></el-table-column>
+				<el-table-column prop="description" label="客户介绍" align="center"></el-table-column>
+				<el-table-column prop="telephone_number" label="联系电话" align="center"></el-table-column>
+               
+                <el-table-column label="操作" width="180" align="center">
+                    <template slot-scope="scope">
+						<el-button v-on:click="addCustomerBtn(true, scope.row)" class="textGreen" type="text" size="small">编辑</el-button>
+						<el-button v-on:click="deleteCustomer(scope.row)" type="text" size="small">删除</el-button>
+              
+                    </template>
+                </el-table-column>
+            </el-table>
+        </div>
+        <div class="block">
+            <el-pagination
+                    v-on:current-change="changePages"
+                    :current-page="page"
+                    :page-size="limit"
+                    layout="total, prev, pager, next, jumper"
+                    :total="total">
+            </el-pagination>
+        </div>
+    </div>
+    <!--添加 编辑-->
+    <el-dialog :title="title" :visible.sync="isAdd" width="400px" :close-on-click-modal="false" :close-on-press-escape="false">
+        <div class="dialog-body" style="padding-top: 3px;">
+				<div class="add-item" >
+					<label>名称：<b style="color:red">*</b></label>
+					<el-input v-model="params.name" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>简称：<b style="color:red">*</b></label>
+					<el-input v-model="params.short_name" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>地址：<b style="color:red">*</b></label>
+					<el-input v-model="params.address" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>类型编码 1 企业 2 个人 3 事业单位 9其他：<b style="color:red">*</b></label>
+					<el-input v-model="params.type_code" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>客户介绍：<b style="color:red">*</b></label>
+					<el-input v-model="params.description" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>联系电话：<b style="color:red">*</b></label>
+					<el-input v-model="params.telephone_number" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+          
+
+        </div>
+        <div slot="footer" class="dialog-footer btn btnBom">
+            <el-button v-on:click="isAdd = false">取消</el-button>
+            <el-button type="primary" v-on:click="addCustomer">保存</el-button>
+        </div>
+    </el-dialog>
+</div>
+</body>
+
+<script th:src="@{/pageview/customer/CustomerViewPage.js}"></script>
+</html>

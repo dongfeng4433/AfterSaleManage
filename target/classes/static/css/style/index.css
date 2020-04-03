@@ -1,0 +1,75 @@
+#homePage{
+    width:100%;
+    height:100%;
+}
+
+/*内容*/
+.home-content {
+    padding: 25px 0;
+}
+.el-tabs--card>.el-tabs__header {
+    padding: 0 25px;
+}
+.el-tabs__item {
+    height: 35px;
+    line-height: 35px;
+}
+.el-tabs__item:hover {
+    color: #428eda;
+    cursor: pointer;
+}
+.el-tabs__item.is-active {
+    color: #428eda;
+}
+.item-task {
+    padding: 0 25px 25px 25px;
+}
+.textRed {
+    color: #f25858;
+}
+.textRed:hover,.textRed:active,.textRed:focus {
+    color: #f25858;
+}
+.textGreen {
+    color: #0b9d1c;
+}
+.textGreen:hover,.textGreen:active,.textGreen:focus {
+    color: #0b9d1c;
+}
+.textYellow {
+    color: #673ab7;
+}
+.textYellow:hover,.textYellow:active,.textYellow:focus {
+    color: #673ab7;
+}
+.btnBom .el-button {
+    padding: 10px 20px!important;
+}
+.add-item {
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.add-item>label {
+    float: left;
+    width: 40px;
+}
+.add-item .item-right {
+    float: left;
+}
+.item-textarea {
+    width: 500px;
+}
+.btn-margin .el-button+.el-button {
+    margin-left: 0;
+}
+.fj {
+    color: #409EFF;
+    cursor: pointer;
+}
+.online {
+    color: #005599;
+}
+.online>label {
+    cursor: pointer;
+    text-decoration: underline;
+}

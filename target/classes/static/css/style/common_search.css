@@ -1,0 +1,39 @@
+
+/*内容*/
+.home-content {
+    padding: 25px;
+}
+.btn {
+    margin: 5px 0 20px 0;
+}
+.btn .el-button {
+    padding: 9px 17px;
+    margin-left: 10px;
+}
+.addBtn {
+    background-color: #f25858!important;
+    border-color: #f25858!important;
+}
+.addBtn.is-active, .addBtn:active {
+    background-color: #f25858!important;
+    border-color: #f25858!important;
+}
+.addBtn:focus, .addBtn:hover {
+    background-color: #f25858!important;
+    border-color: #f25858!important;
+}
+.textGreen {
+    color: #0b9d1c;
+}
+.textGreen:hover,.textGreen:active,.textGreen:focus {
+    color: #0b9d1c;
+}
+.add-item {
+    margin-bottom: 20px;
+}
+.add-item label {
+    width: 70px;
+    display: inline-block;
+    text-align: right;
+    margin-right: 8px;
+}

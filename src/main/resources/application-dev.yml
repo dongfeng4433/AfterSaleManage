@@ -1,0 +1,25 @@
+server:
+    port: 9999
+#    ssl:
+#        key-store: classpath:2518718_www..com.pfx
+#        key-store-password: vAW0RF1D
+#        keyStoreType: PKCS12
+#        keyAlias: client
+
+spring:
+    thymeleaf:
+        prefix: classpath:/templates/
+        suffix: .html
+        mode: HTML5
+        encoding: UTF-8
+        cache: false
+        cache-period: 0
+    template:
+        cache: false
+    resources:
+      static-locations: classpath:/static/
+
+
+logging:
+#    config: classpath:config/logback-spring.xml
+    config: classpath:log4j2.yml

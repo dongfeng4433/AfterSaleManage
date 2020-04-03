@@ -1,0 +1,56 @@
+#login {
+    background: url('../../img/bg1.jpg') no-repeat center top;
+    /*background-size: 100% 100%;*/
+    -moz-background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.loginPage {
+    background-color: white;
+    width: 330px;
+    height: 335px;
+    border-radius: 3px;
+    padding: 27px 23px 29px 23px;
+    position: relative;
+}
+.login-title {
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 23px;
+}
+.loginPage>input {
+    outline: none;
+    border: 0;
+    background-color: #eaeaec;
+    border-radius: 3px;
+    height: 40px;
+    width: 100%;
+    margin-bottom: 25px;
+    font-size: 12px;
+    padding: 0 19px;
+    color: #333;
+}
+.login-btn {
+    height: 40px;
+    line-height: 40px;
+    background: #428eda;
+    color: #fff;
+    border-radius: 3px;
+    width: 100%;
+    border: 1px solid #428eda;
+    padding: 0;
+}
+.login-btn:hover {
+    opacity: 0.9;
+}
+.el_select {
+    width: 100%;
+    margin-bottom: 25px;
+}
+.el_select input {
+    background-color: #eaeaec;
+    border: 0;
+    border-radius: 3px;
+}
