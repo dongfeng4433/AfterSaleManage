@@ -60,6 +60,9 @@ public class TDataEnterpriseOrderController  extends BaseController{
         DataService dataService = this.getDataService();
         DataContext dataContext = dataService.getDataContext(druidConfig);
 
+		//归属企业查询
+		fillQueryModel4Crop(dataContext,queryModel,sessionModel);
+		queryModel.setenterprise_id(queryModel.getEnterprise_id());
 		if(pagingOptions.getPageSize()==0)pagingOptions.setPageSize(20);
 		pagingOptions.setNeedTotal(true);
 		Collection<TDataEnterpriseOrderDtoModel> dtoModelList=dataService.SelectT_DATA_ENTERPRISE_ORDER(pagingOptions,queryModel,null);
@@ -79,6 +82,9 @@ public class TDataEnterpriseOrderController  extends BaseController{
 		DataService dataService = this.getDataService();
 		DataContext dataContext = dataService.getDataContext(druidConfig);
 		TDataEnterpriseOrderDao dao = new TDataEnterpriseOrderDao(dataContext);
+
+		String enterprise_id=getEnterpriseId2User(dataContext,sessionModel);
+		dtoModel.setenterprise_id(enterprise_id);
 		TDataEnterpriseOrderModel model=new TDataEnterpriseOrderModel();
 		model.setorder_id(dtoModel.getorder_id());
 		boolean exist = dao.exist(model);
@@ -93,7 +99,6 @@ public class TDataEnterpriseOrderController  extends BaseController{
 				model.setaddress(dtoModel.getaddress());
 				model.setdescription(dtoModel.getdescription());
 				model.setlast_edit_time(new Date());
-				model.setcreation_user_id(sessionModel.getUserId());
 				model.setlast_edit_user_id(sessionModel.getUserId());
 				model.setstart_time(dtoModel.getstart_time());
 				model.setcomplete_time(dtoModel.getcomplete_time());
@@ -107,6 +112,9 @@ public class TDataEnterpriseOrderController  extends BaseController{
 				model.setis_valid(1);
 				model.setorder_id(Utility.createUniqueId());
 				model.setcreate_time(new Date());
+				model.setlast_edit_time(new Date());
+				model.setcreation_user_id(sessionModel.getUserId());
+				model.setlast_edit_user_id(sessionModel.getUserId());
 				dao.insertOnSubmit(model);
 			}
 			baseResultModel.setSuccess(true);

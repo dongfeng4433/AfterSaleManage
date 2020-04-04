@@ -9,7 +9,7 @@ var vm = new Vue({
 
 			goods_id: '',
 			name: '',
-			description: '',
+			batch_no: '',
 
 
             title: '添加',  // 添加编辑企业信息
@@ -45,10 +45,8 @@ var vm = new Vue({
                 pageSize: _vue.limit
             };
 			if(this.name.replace(/(^\s*)|(\s*$)/g, "")) params.name = this.name;
-			if(this.description.replace(/(^\s*)|(\s*$)/g, "")) params.description = this.description;
+			if(this.batch_no.replace(/(^\s*)|(\s*$)/g, "")) params.batch_no = this.batch_no;
             
-            if(this.name.replace(/(^\s*)|(\s*$)/g, "")) params.name = this.name;
-            if(this.telephone_number.replace(/(^\s*)|(\s*$)/g, "")) params.telephone_number = this.telephone_number;
             var loading = control.loading(this);
             js.Web.AjaxRequest(this, url, params, null,
                 function (success, data) {

@@ -60,6 +60,9 @@ public class TDataEnterpriseWarehouseController  extends BaseController{
         DataService dataService = this.getDataService();
         DataContext dataContext = dataService.getDataContext(druidConfig);
 
+		//归属企业查询
+		fillQueryModel4Crop(dataContext,queryModel,sessionModel);
+		queryModel.setenterprise_id(queryModel.getEnterprise_id());
 		if(pagingOptions.getPageSize()==0)pagingOptions.setPageSize(20);
 		pagingOptions.setNeedTotal(true);
 		Collection<TDataEnterpriseWarehouseDtoModel> dtoModelList=dataService.SelectT_DATA_ENTERPRISE_WAREHOUSE(pagingOptions,queryModel,null);
@@ -78,6 +81,9 @@ public class TDataEnterpriseWarehouseController  extends BaseController{
 		SessionModel sessionModel=this.getSessionModel(request);
 		DataService dataService = this.getDataService();
 		DataContext dataContext = dataService.getDataContext(druidConfig);
+		String enterprise_id=getEnterpriseId2User(dataContext,sessionModel);
+		dtoModel.setenterprise_id(enterprise_id);
+
 		TDataEnterpriseWarehouseDao dao = new TDataEnterpriseWarehouseDao(dataContext);
 		TDataEnterpriseWarehouseModel model=new TDataEnterpriseWarehouseModel();
 		model.setwarehouse_id(dtoModel.getwarehouse_id());
@@ -93,7 +99,6 @@ public class TDataEnterpriseWarehouseController  extends BaseController{
 				model.setdescription(dtoModel.getdescription());
 				model.settelephone_number(dtoModel.gettelephone_number());
 				model.setlast_edit_time(new Date());
-				model.setcreation_user_id(sessionModel.getUserId());
 				model.setlast_edit_user_id(sessionModel.getUserId());
 				dao.updateOnSubmit(model);
 			}else{
@@ -101,6 +106,9 @@ public class TDataEnterpriseWarehouseController  extends BaseController{
 				model.setis_valid(1);
 				model.setwarehouse_id(Utility.createUniqueId());
 				model.setcreate_time(new Date());
+				model.setlast_edit_time(new Date());
+				model.setcreation_user_id(sessionModel.getUserId());
+				model.setlast_edit_user_id(sessionModel.getUserId());
 				dao.insertOnSubmit(model);
 			}
 			baseResultModel.setSuccess(true);

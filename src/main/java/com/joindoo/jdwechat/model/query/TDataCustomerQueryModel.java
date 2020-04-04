@@ -1,12 +1,14 @@
 package com.joindoo.jdwechat.model.query;
 
+import com.joindoo.jdwechat.model.query.BaseQueryModel;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.math.BigDecimal;
 
 /**
 * 主数据 - 客户  可以是个人也可以是企业
 * Author: zhuqiang4433@gmail.com
-* Memo: Auto Created by CodeGenerator on 2020/3/26.
+* Memo: Auto Created by CodeGenerator on 2020/4/4.
 */
 
 public class TDataCustomerQueryModel extends BaseQueryModel{

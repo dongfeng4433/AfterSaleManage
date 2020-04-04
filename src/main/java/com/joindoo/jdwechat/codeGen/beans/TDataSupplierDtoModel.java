@@ -7,29 +7,22 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
-* 主数据 - 企业 - 工单 
+* 主数据 - 供应商 可以是个人也可以是企业
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
 * Memo: Auto Created by CodeGenerator on 2020/4/4.
 */
 
 @JsonInclude(value= JsonInclude.Include.NON_NULL)
-public class TDataEnterpriseOrderDtoModel extends BaseDtoModel{
-	/*工单id*/ 
-	protected String order_id;
-	public String getorder_id (){ return order_id;}
-	public void setorder_id(String value){
-		this.order_id=value;
+public class TDataSupplierDtoModel extends BaseDtoModel{
+	/*供应商id*/ 
+	protected String supplier_id;
+	public String getsupplier_id (){ return supplier_id;}
+	public void setsupplier_id(String value){
+		this.supplier_id=value;
   	}
 
-	/*工单编号(SH2003220001)*/ 
-	protected String order_no;
-	public String getorder_no (){ return order_no;}
-	public void setorder_no(String value){
-		this.order_no=value;
-  	}
-
-	/*企业id*/ 
+	/*企业id（客户由本企业自己维护）*/ 
 	protected String enterprise_id;
 	public String getenterprise_id (){ return enterprise_id;}
 	public void setenterprise_id(String value){
@@ -43,11 +36,11 @@ public class TDataEnterpriseOrderDtoModel extends BaseDtoModel{
 		this.name=value;
   	}
 
-	/*客户id*/ 
-	protected String customer_id;
-	public String getcustomer_id (){ return customer_id;}
-	public void setcustomer_id(String value){
-		this.customer_id=value;
+	/*简称*/ 
+	protected String short_name;
+	public String getshort_name (){ return short_name;}
+	public void setshort_name(String value){
+		this.short_name=value;
   	}
 
 	/*地址*/ 
@@ -57,11 +50,25 @@ public class TDataEnterpriseOrderDtoModel extends BaseDtoModel{
 		this.address=value;
   	}
 
-	/*工单简介描述*/ 
+	/*类型编码 1 企业 2 个人 3 事业单位 9其他*/ 
+	protected String type_code;
+	public String gettype_code (){ return type_code;}
+	public void settype_code(String value){
+		this.type_code=value;
+  	}
+
+	/*客户介绍*/ 
 	protected String description;
 	public String getdescription (){ return description;}
 	public void setdescription(String value){
 		this.description=value;
+  	}
+
+	/*联系电话*/ 
+	protected String telephone_number;
+	public String gettelephone_number (){ return telephone_number;}
+	public void settelephone_number(String value){
+		this.telephone_number=value;
   	}
 
 	/*是否有效*/ 
@@ -101,54 +108,6 @@ public class TDataEnterpriseOrderDtoModel extends BaseDtoModel{
 	public String getlast_edit_user_id (){ return last_edit_user_id;}
 	public void setlast_edit_user_id(String value){
 		this.last_edit_user_id=value;
-  	}
-
-	/*接单时间*/ 
-	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	protected Date start_time;
-	public Date getstart_time (){ return start_time;}
-	public void setstart_time(Date value){
-		this.start_time=value;
-  	}
-
-	/*完成时间*/ 
-	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	protected Date complete_time;
-	public Date getcomplete_time (){ return complete_time;}
-	public void setcomplete_time(Date value){
-		this.complete_time=value;
-  	}
-
-	/*计划完成时间*/ 
-	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	protected Date plan_complete_time;
-	public Date getplan_complete_time (){ return plan_complete_time;}
-	public void setplan_complete_time(Date value){
-		this.plan_complete_time=value;
-  	}
-
-	/*工单接单人员*/ 
-	protected String work_user_id;
-	public String getwork_user_id (){ return work_user_id;}
-	public void setwork_user_id(String value){
-		this.work_user_id=value;
-  	}
-
-	/*工单状态(0 待分配 1作业中 2中断 3完成 9作废)*/ 
-	protected String order_status;
-	public String getorder_status (){ return order_status;}
-	public void setorder_status(String value){
-		this.order_status=value;
-  	}
-
-	/*配件金额*/ 
-	protected Double goods_amount;
-	public Double getgoods_amount (){ return goods_amount;}
-	public void setgoods_amount(Double value){
-		this.goods_amount=value;
   	}
 
 

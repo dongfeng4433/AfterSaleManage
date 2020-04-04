@@ -9,7 +9,6 @@ var vm = new Vue({
 
 			warehouse_id: '',
 			name: '',
-			short_name: '',
 			telephone_number: '',
 
 
@@ -43,7 +42,6 @@ var vm = new Vue({
                 pageSize: _vue.limit
             };
 			if(this.name.replace(/(^\s*)|(\s*$)/g, "")) params.name = this.name;
-			if(this.short_name.replace(/(^\s*)|(\s*$)/g, "")) params.short_name = this.short_name;
 			if(this.telephone_number.replace(/(^\s*)|(\s*$)/g, "")) params.telephone_number = this.telephone_number;
             
             var loading = control.loading(this);

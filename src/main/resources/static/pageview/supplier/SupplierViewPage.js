@@ -1,5 +1,5 @@
 var vm = new Vue({
-    el: "#customer",
+    el: "#supplier",
     data: function () {
         return {
             dataList: [],   // 列表数据
@@ -7,16 +7,15 @@ var vm = new Vue({
             limit: 10,      // 每页显示个数
             page: 1,        // 当前页数
 
-			customer_id: '',
+			supplier_id: '',
 			name: '',
-			type_code: '',
 			telephone_number: '',
 
 
             title: '添加',  // 添加编辑企业信息
             isAdd: false,
             params: {
-				customer_id: '',
+				supplier_id: '',
 				name: '',
 				short_name: '',
 				address: '',
@@ -37,14 +36,13 @@ var vm = new Vue({
         // 获取列表
         getDataList: function (judge) {
             var _vue = this;
-            var url = js.Web.GenerateUrl("TDataCustomer", "search");
+            var url = js.Web.GenerateUrl("TDataSupplier", "search");
             if(!judge) _vue.page = 1;
             var params = {
                 start: (_vue.page-1)*10,
                 pageSize: _vue.limit
             };
 			if(this.name.replace(/(^\s*)|(\s*$)/g, "")) params.name = this.name;
-			if(this.type_code.replace(/(^\s*)|(\s*$)/g, "")) params.type_code = this.type_code;
 			if(this.telephone_number.replace(/(^\s*)|(\s*$)/g, "")) params.telephone_number = this.telephone_number;
             
             var loading = control.loading(this);
@@ -73,10 +71,10 @@ var vm = new Vue({
             this.getDataList(true);
         },
         // 释放添加弹框
-        addCustomerBtn: function (judge, row) {
+        addSupplierBtn: function (judge, row) {
             this.title = judge ? '编辑' : '添加';
             if (!judge) {
-				this.customer_id = '';
+				this.supplier_id = '';
 
                 this.params = {
 					name: '',
@@ -88,7 +86,7 @@ var vm = new Vue({
 
                 };
             } else {
-				this.customer_id=row.customer_id;
+				this.supplier_id=row.supplier_id;
 
                 this.params = {
 					name: row.name,
@@ -103,20 +101,16 @@ var vm = new Vue({
             this.isAdd = true;
         },
         // 添加 编辑 企业信息
-        addCustomer: function () {
+        addSupplier: function () {
             var _vue = this;
-            var url = js.Web.GenerateUrl("TDataCustomer", "saveCustomer");
+            var url = js.Web.GenerateUrl("TDataSupplier", "saveSupplier");
             var params = this.params;
             // 编辑
-			if (this.customer_id) {
-				params.customer_id = this.customer_id;
+			if (this.supplier_id) {
+				params.supplier_id = this.supplier_id;
 			}
             
 			if(!params.name.replace(/(^\s*)|(\s*$)/g, "")) {
-				this.$message.warning('请填写联系电话');
-				return;
-			}
-			if(!params.telephone_number.replace(/(^\s*)|(\s*$)/g, "")) {
 				this.$message.warning('请填写联系电话');
 				return;
 			}
@@ -144,10 +138,10 @@ var vm = new Vue({
         },
 
         //删除账号
-        deleteCustomer: function (row) {
+        deleteSupplier: function (row) {
             var _vue = this;
-            let url = js.Web.GenerateUrl("TDataCustomer", "remove");
-			let params = {customer_id: row.customer_id};
+            let url = js.Web.GenerateUrl("TDataSupplier", "remove");
+			let params = {supplier_id: row.supplier_id};
 
             let loading = control.loading(this);
             js.Web.AjaxRequest(this, url, params, null,

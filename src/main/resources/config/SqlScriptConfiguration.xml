@@ -168,4 +168,18 @@ WHERE (1=1) AND A.IS_VALID=1 ]]>
         </Value>
         <OrderBy><![CDATA[A.CREATE_TIME DESC]]></OrderBy>
     </Item>
+    <Item Id="SelectT_DATA_ENTERPRISE_ORDER">
+        <Value>
+            <![CDATA[SELECT A.* FROM T_DATA_ENTERPRISE_ORDER A
+WHERE (1=1) AND A.IS_VALID=1 ]]>
+        </Value>
+        <OrderBy><![CDATA[A.CREATE_TIME DESC]]></OrderBy>
+    </Item>
+    <Item Id="SelectT_DATA_SUPPLIER">
+        <Value>
+            <![CDATA[SELECT A.* FROM T_DATA_SUPPLIER A
+WHERE (1=1) AND A.IS_VALID=1 ]]>
+        </Value>
+        <OrderBy><![CDATA[A.CREATE_TIME DESC]]></OrderBy>
+    </Item>
 </SQLScripts>

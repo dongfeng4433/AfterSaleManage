@@ -33,8 +33,8 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
-@RequestMapping("TDataCustomer")
-public class TDataCustomerController  extends BaseController{
+@RequestMapping("TDataSupplier")
+public class TDataSupplierController  extends BaseController{
 	 @Autowired
     DruidConfig druidConfig;
 
@@ -48,24 +48,21 @@ public class TDataCustomerController  extends BaseController{
 		if (sessionModel.isLogin() == false){
 			modelAndView.setViewName("account/login");
 		}else{
-			modelAndView.setViewName("customer/index");
+			modelAndView.setViewName("supplier/index");
 			modelAndView.setStatus(HttpStatus.OK);
 		}
 		return modelAndView;
 	}
 	@RequestMapping(value = "/search",method = RequestMethod.POST)
-	public ResponseEntity<ResultListModel> search(HttpServletRequest request,PagingOptions pagingOptions, TDataCustomerQueryModel queryModel) {
+	public ResponseEntity<ResultListModel> search(HttpServletRequest request,PagingOptions pagingOptions, TDataSupplierQueryModel queryModel) {
 		ResultListModel resultListModel = new ResultListModel();
         SessionModel sessionModel=this.getSessionModel(request);
         DataService dataService = this.getDataService();
         DataContext dataContext = dataService.getDataContext(druidConfig);
 
-		//归属企业查询
-		fillQueryModel4Crop(dataContext,queryModel,sessionModel);
-		queryModel.setenterprise_id(queryModel.getEnterprise_id());
 		if(pagingOptions.getPageSize()==0)pagingOptions.setPageSize(20);
 		pagingOptions.setNeedTotal(true);
-		Collection<TDataCustomerDtoModel> dtoModelList=dataService.SelectT_DATA_CUSTOMER(pagingOptions,queryModel,null);
+		Collection<TDataSupplierDtoModel> dtoModelList=dataService.SelectT_DATA_SUPPLIER(pagingOptions,queryModel,null);
 		int start = pagingOptions.getStart();
 		resultListModel.setRows(dtoModelList);
         resultListModel.setStart(start);
@@ -75,18 +72,15 @@ public class TDataCustomerController  extends BaseController{
         dataService.disposeInCurrentThread();
         return new ResponseEntity<>(resultListModel, HttpStatus.OK);
     }
-	@RequestMapping(value = "/saveCustomer",method = RequestMethod.POST)
-	public ResponseEntity<BaseResultModel> saveCustomer(TDataCustomerDtoModel dtoModel, HttpServletRequest request) {
+	@RequestMapping(value = "/saveSupplier",method = RequestMethod.POST)
+	public ResponseEntity<BaseResultModel> saveSupplier(TDataSupplierDtoModel dtoModel, HttpServletRequest request) {
 		BaseResultModel baseResultModel = new BaseResultModel();
 		SessionModel sessionModel=this.getSessionModel(request);
 		DataService dataService = this.getDataService();
 		DataContext dataContext = dataService.getDataContext(druidConfig);
-		TDataCustomerDao dao = new TDataCustomerDao(dataContext);
-
-		String enterprise_id=getEnterpriseId2User(dataContext,sessionModel);
-		dtoModel.setenterprise_id(enterprise_id);
-		TDataCustomerModel model=new TDataCustomerModel();
-		model.setcustomer_id(dtoModel.getcustomer_id());
+		TDataSupplierDao dao = new TDataSupplierDao(dataContext);
+		TDataSupplierModel model=new TDataSupplierModel();
+		model.setsupplier_id(dtoModel.getsupplier_id());
 		boolean exist = dao.exist(model);
 		try {
 			if(exist){
@@ -105,7 +99,7 @@ public class TDataCustomerController  extends BaseController{
 			}else{
 				BeanUtils.copyProperties(dtoModel,model);
 				model.setis_valid(1);
-				model.setcustomer_id(Utility.createUniqueId());
+				model.setsupplier_id(Utility.createUniqueId());
 				model.setcreate_time(new Date());
 				model.setlast_edit_time(new Date());
 				model.setcreation_user_id(sessionModel.getUserId());
@@ -123,9 +117,9 @@ public class TDataCustomerController  extends BaseController{
 		return new ResponseEntity<>(baseResultModel, HttpStatus.OK);
 	}
 	@RequestMapping(value = "/remove",method = RequestMethod.POST)
-	public ResponseEntity<BaseResultModel> remove(HttpServletRequest request, TDataCustomerModel model) {
+	public ResponseEntity<BaseResultModel> remove(HttpServletRequest request, TDataSupplierModel model) {
 		BaseResultModel baseResultModel = new BaseResultModel();
-		if(Utility.isNullOrEmpty(model.getcustomer_id())){
+		if(Utility.isNullOrEmpty(model.getsupplier_id())){
 			baseResultModel.setSuccess(false);
 			baseResultModel.setMsg("参数有误");
 			return new ResponseEntity<>(baseResultModel, HttpStatus.OK);
@@ -134,8 +128,8 @@ public class TDataCustomerController  extends BaseController{
 		SessionModel sessionModel=this.getSessionModel(request);
 		DataService dataService = this.getDataService();
 		DataContext dataContext = dataService.getDataContext(druidConfig);
-		TDataCustomerDao dao = new TDataCustomerDao(dataContext);
-		TDataCustomerModel model1= dao.find(model);
+		TDataSupplierDao dao = new TDataSupplierDao(dataContext);
+		TDataSupplierModel model1= dao.find(model);
 		try {
 			if(model1!=null){
 				model1.doUpdate();

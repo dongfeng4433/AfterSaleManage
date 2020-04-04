@@ -51,8 +51,6 @@ var vm = new Vue({
 			if(this.name.replace(/(^\s*)|(\s*$)/g, "")) params.name = this.name;
 			if(this.customer_id.replace(/(^\s*)|(\s*$)/g, "")) params.customer_id = this.customer_id;
             
-            if(this.name.replace(/(^\s*)|(\s*$)/g, "")) params.name = this.name;
-            if(this.telephone_number.replace(/(^\s*)|(\s*$)/g, "")) params.telephone_number = this.telephone_number;
             var loading = control.loading(this);
             js.Web.AjaxRequest(this, url, params, null,
                 function (success, data) {

@@ -43,13 +43,17 @@ public class BaseDataService extends com.joindoo.jdwechat.data.EdenDataService {
 						where+=" and NAME LIKE ?";
 						params.add("%"+queryModel.getname()+"%");
 					}
-					if(null!=queryModel.getshort_name()){
-						where+=" and SHORT_NAME=?";
-						params.add(queryModel.getshort_name());
+					if(null!=queryModel.gettype_code()){
+						where+=" and TYPE_CODE=?";
+						params.add(queryModel.gettype_code());
 					}
 					if(null!=queryModel.gettelephone_number()){
 						where+=" and TELEPHONE_NUMBER=?";
 						params.add(queryModel.gettelephone_number());
+					}
+					if(null!=queryModel.getenterprise_id()){
+						where+=" and ENTERPRISE_ID=?";
+						params.add(queryModel.getenterprise_id());
 					}
 					scriptItemModel.setSqlWhere(where);
                 }
@@ -133,9 +137,13 @@ public class BaseDataService extends com.joindoo.jdwechat.data.EdenDataService {
 						where+=" and NAME LIKE ?";
 						params.add("%"+queryModel.getname()+"%");
 					}
-					if(null!=queryModel.getdescription()){
-						where+=" and DESCRIPTION=?";
-						params.add(queryModel.getdescription());
+					if(null!=queryModel.getbatch_no()){
+						where+=" and BATCH_NO LIKE ?";
+						params.add("%"+queryModel.getbatch_no()+"%");
+					}
+					if(null!=queryModel.getenterprise_id()){
+						where+=" and ENTERPRISE_ID=?";
+						params.add(queryModel.getenterprise_id());
 					}
 					scriptItemModel.setSqlWhere(where);
                 }
@@ -184,6 +192,10 @@ public class BaseDataService extends com.joindoo.jdwechat.data.EdenDataService {
 						where+=" and CUSTOMER_ID=?";
 						params.add(queryModel.getcustomer_id());
 					}
+					if(null!=queryModel.getenterprise_id()){
+						where+=" and ENTERPRISE_ID=?";
+						params.add(queryModel.getenterprise_id());
+					}
 					scriptItemModel.setSqlWhere(where);
                 }
 				scriptItemModel.setParams(params.toArray());
@@ -223,13 +235,13 @@ public class BaseDataService extends com.joindoo.jdwechat.data.EdenDataService {
 						where+=" and NAME LIKE ?";
 						params.add("%"+queryModel.getname()+"%");
 					}
-					if(null!=queryModel.getshort_name()){
-						where+=" and SHORT_NAME=?";
-						params.add(queryModel.getshort_name());
-					}
 					if(null!=queryModel.gettelephone_number()){
 						where+=" and TELEPHONE_NUMBER=?";
 						params.add(queryModel.gettelephone_number());
+					}
+					if(null!=queryModel.getenterprise_id()){
+						where+=" and ENTERPRISE_ID=?";
+						params.add(queryModel.getenterprise_id());
 					}
 					scriptItemModel.setSqlWhere(where);
                 }
@@ -242,6 +254,53 @@ public class BaseDataService extends com.joindoo.jdwechat.data.EdenDataService {
 		for (IBaseModel b : collection){
 			TDataEnterpriseWarehouseDtoModel dto=new TDataEnterpriseWarehouseDtoModel();
 			BeanUtils.copyProperties((TDataEnterpriseWarehouseModel)b,dto);
+			models.add(dto);
+        }
+        return models;
+    }
+	//t_data_supplier 主数据 - 供应商 可以是个人也可以是企业
+	public Collection<TDataSupplierDtoModel> SelectT_DATA_SUPPLIER(PagingOptions pagingOptions, TDataSupplierQueryModel queryModel , String sql) {
+		if(Utility.isNullOrEmpty(sql)){
+			sql=WeChatFields.Script_SelectT_DATA_SUPPLIER;
+		}
+		ScriptItemModel scriptItemModel= SystemSetting.JD_ServerCache.getSciptItemModel(sql);
+		if(null==scriptItemModel){
+			logger.info(sql+" 查询脚本没有找到");
+			return null;
+		}
+		DataParamsHandler dataParamsHandler=new DataParamsHandler(){
+			@Override
+			public void resolveParams(ScriptItemModel scriptItemModel) {
+				ArrayList<Object> params=new ArrayList<>();
+				if(null!=queryModel){
+					String where="";
+					if(null!=queryModel.getsupplier_id()){
+						where+=" and SUPPLIER_ID=?";
+						params.add(queryModel.getsupplier_id());
+					}
+					if(null!=queryModel.getname()){
+						where+=" and NAME LIKE ?";
+						params.add("%"+queryModel.getname()+"%");
+					}
+					if(null!=queryModel.gettelephone_number()){
+						where+=" and TELEPHONE_NUMBER LIKE ?";
+						params.add("%"+queryModel.gettelephone_number()+"%");
+					}
+					if(null!=queryModel.getenterprise_id()){
+						where+=" and ENTERPRISE_ID=?";
+						params.add(queryModel.getenterprise_id());
+					}
+					scriptItemModel.setSqlWhere(where);
+                }
+				scriptItemModel.setParams(params.toArray());
+			}
+		};
+		queryModel.dataParamsHandler=dataParamsHandler;
+		Collection<IBaseModel> collection= SelectBaseData(DataContext.getCurrentConnection(),TDataSupplierModel.class,scriptItemModel,pagingOptions,queryModel);
+		Collection<TDataSupplierDtoModel> models=new ArrayList<>();
+		for (IBaseModel b : collection){
+			TDataSupplierDtoModel dto=new TDataSupplierDtoModel();
+			BeanUtils.copyProperties((TDataSupplierModel)b,dto);
 			models.add(dto);
         }
         return models;
@@ -312,6 +371,10 @@ public class BaseDataService extends com.joindoo.jdwechat.data.EdenDataService {
 					if(null!=queryModel.getmc()){
 						where+=" and MC LIKE ?";
 						params.add("%"+queryModel.getmc()+"%");
+					}
+					if(null!=queryModel.getyyz_xh()){
+						where+=" and YYZ_XH=?";
+						params.add(queryModel.getyyz_xh());
 					}
 					scriptItemModel.setSqlWhere(where);
                 }

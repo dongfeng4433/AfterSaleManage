@@ -60,6 +60,9 @@ public class TDataEnterpriseGoodsController  extends BaseController{
         DataService dataService = this.getDataService();
         DataContext dataContext = dataService.getDataContext(druidConfig);
 
+		//归属企业查询
+		fillQueryModel4Crop(dataContext,queryModel,sessionModel);
+		queryModel.setenterprise_id(queryModel.getEnterprise_id());
 		if(pagingOptions.getPageSize()==0)pagingOptions.setPageSize(20);
 		pagingOptions.setNeedTotal(true);
 		Collection<TDataEnterpriseGoodsDtoModel> dtoModelList=dataService.SelectT_DATA_ENTERPRISE_GOODS(pagingOptions,queryModel,null);
@@ -79,6 +82,10 @@ public class TDataEnterpriseGoodsController  extends BaseController{
 		DataService dataService = this.getDataService();
 		DataContext dataContext = dataService.getDataContext(druidConfig);
 		TDataEnterpriseGoodsDao dao = new TDataEnterpriseGoodsDao(dataContext);
+
+		String enterprise_id=getEnterpriseId2User(dataContext,sessionModel);
+		dtoModel.setenterprise_id(enterprise_id);
+
 		TDataEnterpriseGoodsModel model=new TDataEnterpriseGoodsModel();
 		model.setgoods_id(dtoModel.getgoods_id());
 		boolean exist = dao.exist(model);
@@ -93,7 +100,6 @@ public class TDataEnterpriseGoodsController  extends BaseController{
 				model.setaddress(dtoModel.getaddress());
 				model.setdescription(dtoModel.getdescription());
 				model.setlast_edit_time(new Date());
-				model.setcreation_user_id(sessionModel.getUserId());
 				model.setlast_edit_user_id(sessionModel.getUserId());
 				model.setsale_price(dtoModel.getsale_price());
 				model.setbatch_no(dtoModel.getbatch_no());
@@ -104,6 +110,9 @@ public class TDataEnterpriseGoodsController  extends BaseController{
 				model.setis_valid(1);
 				model.setgoods_id(Utility.createUniqueId());
 				model.setcreate_time(new Date());
+				model.setlast_edit_time(new Date());
+				model.setcreation_user_id(sessionModel.getUserId());
+				model.setlast_edit_user_id(sessionModel.getUserId());
 				dao.insertOnSubmit(model);
 			}
 			baseResultModel.setSuccess(true);

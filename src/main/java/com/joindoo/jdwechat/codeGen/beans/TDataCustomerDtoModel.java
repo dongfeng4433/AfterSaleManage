@@ -9,7 +9,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 /**
 * 主数据 - 客户  可以是个人也可以是企业
 * Author: zhuqiang4433@gmail.com
-* Memo: Auto Created by CodeGenerator on 2020/3/26.
+* Version: CodeGenerator 1.1
+* Memo: Auto Created by CodeGenerator on 2020/4/4.
 */
 
 @JsonInclude(value= JsonInclude.Include.NON_NULL)
