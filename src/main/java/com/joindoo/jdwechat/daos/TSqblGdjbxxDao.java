@@ -15,7 +15,7 @@ import java.util.List;
 * 诉求办理 - 工单基本信息
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/3.
+* Memo: Auto Created by CodeGenerator on 2020/4/4.
 */
 
 public class TSqblGdjbxxDao extends BaseDao {

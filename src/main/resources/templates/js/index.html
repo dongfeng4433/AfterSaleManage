@@ -40,6 +40,9 @@
                 </el-table-column>
 				<el-table-column prop="mc" label="角色名称" align="center"></el-table-column>
 				<el-table-column prop="ms" label="描述" align="center"></el-table-column>
+				<el-table-column prop="wz_px" label="位置排序" align="center"></el-table-column>
+				<el-table-column prop="lr_sj" label="创建时间" align="center"></el-table-column>
+				<el-table-column prop="xg_sj" label="最后修改时间" align="center"></el-table-column>
                
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
@@ -70,6 +73,10 @@
 				<div class="add-item" >
 					<label>描述：<b style="color:red">*</b></label>
 					<el-input v-model="params.ms" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>位置排序：<b style="color:red">*</b></label>
+					<el-input v-model="params.wz_px" style="width: 250px;" size="small" placeholder=""></el-input>
 				</div>
           
 

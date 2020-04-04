@@ -11,6 +11,7 @@ import com.joindoo.jdwechat.cache.SessionModel;
 import com.joindoo.jdwechat.codeGen.beans.TXtGyFjxxDtoModel;
 import com.joindoo.jdwechat.common.WeChatEnums;
 import com.joindoo.jdwechat.controller.api.BaseApiController;
+import com.joindoo.jdwechat.daos.TDataEnterprise2UserDao;
 import com.joindoo.jdwechat.daos.TTxTztxjl2RyDao;
 import com.joindoo.jdwechat.daos.TTxTztxjlDao;
 import com.joindoo.jdwechat.daos.TXtGyFjxxDao;
@@ -291,8 +292,27 @@ public class BaseController extends BaseApiController {
 
     //endregion
 
-
-
+    public void fillQueryModel4Crop(DataContext dataContext,BaseQueryModel queryModel,SessionModel sessionModel){
+        //归属企业查询
+        String sql="select * from t_data_enterprise_2_user where user_id=? and is_valid=1";
+        TDataEnterprise2UserDao userDao=new TDataEnterprise2UserDao(dataContext);
+        List<BaseModel> models=userDao.queryAll(sql,sessionModel.getUserId());
+        if(models.size()>0){
+            TDataEnterprise2UserModel userModel=(TDataEnterprise2UserModel) models.get(0);
+            queryModel.setEnterprise_id(userModel.getenterprise_id());
+        }
+    }
+    public String getEnterpriseId2User(DataContext dataContext,SessionModel sessionModel){
+        //归属企业查询
+        String sql="select * from t_data_enterprise_2_user where user_id=? and is_valid=1";
+        TDataEnterprise2UserDao userDao=new TDataEnterprise2UserDao(dataContext);
+        List<BaseModel> models=userDao.queryAll(sql,sessionModel.getUserId());
+        if(models.size()>0){
+            TDataEnterprise2UserModel userModel=(TDataEnterprise2UserModel) models.get(0);
+            return userModel.getenterprise_id();
+        }
+        return null;
+    }
     /**
      * 校验密码
      *

@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 * 主数据 - 企业  平台主要表，企业管理员必须关联本表
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/3.
+* Memo: Auto Created by CodeGenerator on 2020/4/4.
 */
 
 public class TDataEnterpriseModel extends BaseModel implements IBaseModel{

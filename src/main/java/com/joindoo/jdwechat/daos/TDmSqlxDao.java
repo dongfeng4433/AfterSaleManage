@@ -20,7 +20,7 @@ import java.util.List;
 
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/3.
+* Memo: Auto Created by CodeGenerator on 2020/4/4.
 */
 
 public class TDmSqlxDao extends BaseDao {

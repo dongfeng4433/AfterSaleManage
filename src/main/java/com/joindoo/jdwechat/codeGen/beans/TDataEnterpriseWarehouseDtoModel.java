@@ -1,10 +1,6 @@
 package com.joindoo.jdwechat.codeGen.beans;
 
-import com.joindoo.jdwechat.model.IBaseModel;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
-import java.sql.Timestamp;
 import java.math.BigDecimal;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,7 +9,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 /**
 * 主数据 - 企业 - 仓库  主要有企业管理员维护 
 * Author: zhuqiang4433@gmail.com
-* Memo: Auto Created by CodeGenerator on 2020/4/3.
+* Version: CodeGenerator 1.1
+* Memo: Auto Created by CodeGenerator on 2020/4/4.
 */
 
 @JsonInclude(value= JsonInclude.Include.NON_NULL)

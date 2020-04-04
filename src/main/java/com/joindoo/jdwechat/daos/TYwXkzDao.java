@@ -15,7 +15,7 @@ import java.util.List;
 * 业务_许可证   1 人力资源服务许可证  2 劳务派遣经营许可证
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/3.
+* Memo: Auto Created by CodeGenerator on 2020/4/4.
 */
 
 public class TYwXkzDao extends BaseDao {

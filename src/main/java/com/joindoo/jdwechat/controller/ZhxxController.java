@@ -202,13 +202,7 @@ public class ZhxxController extends BaseController {
                 }
             }
             //归属企业查询
-            String sql="select * from t_data_enterprise_2_user where user_id=? and is_valid=1";
-            TDataEnterprise2UserDao userDao=new TDataEnterprise2UserDao(dataContext);
-            List<BaseModel> models=userDao.queryAll(sql,sessionModel.getUserId());
-            if(models.size()>0){
-                TDataEnterprise2UserModel userModel=(TDataEnterprise2UserModel) models.get(0);
-                queryModel.setEnterprise_id(userModel.getenterprise_id());
-            }
+            fillQueryModel4Crop(dataContext,queryModel,sessionModel);
             List<TXtAqZhxxDtoModel>  dtoModelList= dataService.selectT_XT_AQ_ZHXX(pagingOptions, queryModel,null);
             int start = pagingOptions.getStart();
             resultListModel.setRows(dtoModelList);

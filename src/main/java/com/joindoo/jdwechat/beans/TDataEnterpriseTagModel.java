@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 * 主数据 - 企业 -  标签  由企业管理员自身维护，主要用于对客户进行自定义分类
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/3.
+* Memo: Auto Created by CodeGenerator on 2020/4/4.
 */
 
 public class TDataEnterpriseTagModel extends BaseModel implements IBaseModel{

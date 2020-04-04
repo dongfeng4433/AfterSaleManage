@@ -274,14 +274,6 @@ public class TXtAqZhxxQueryModel extends BaseQueryModel{
 		this.is_search_4_select = is_search_4_select;
 	}
 
-	private String enterprise_id;
 
-	public String getEnterprise_id() {
-		return enterprise_id;
-	}
-
-	public void setEnterprise_id(String enterprise_id) {
-		this.enterprise_id = enterprise_id;
-	}
 }
 

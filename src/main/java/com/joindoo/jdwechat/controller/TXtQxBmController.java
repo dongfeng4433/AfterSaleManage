@@ -60,6 +60,9 @@ public class TXtQxBmController  extends BaseController{
         DataService dataService = this.getDataService();
         DataContext dataContext = dataService.getDataContext(druidConfig);
 
+		//归属企业查询
+		fillQueryModel4Crop(dataContext,queryModel,sessionModel);
+		queryModel.setyyz_xh(queryModel.getEnterprise_id());
 		if(pagingOptions.getPageSize()==0)pagingOptions.setPageSize(20);
 		pagingOptions.setNeedTotal(true);
 		Collection<TXtQxBmDtoModel> dtoModelList=dataService.SelectT_XT_QX_BM(pagingOptions,queryModel,null);
@@ -78,6 +81,8 @@ public class TXtQxBmController  extends BaseController{
 		SessionModel sessionModel=this.getSessionModel(request);
 		DataService dataService = this.getDataService();
 		DataContext dataContext = dataService.getDataContext(druidConfig);
+		String enterprise_id=getEnterpriseId2User(dataContext,sessionModel);
+		dtoModel.setyyz_xh(enterprise_id);
 		TXtQxBmDao dao = new TXtQxBmDao(dataContext);
 		TXtQxBmModel model=new TXtQxBmModel();
 		model.setbm_dm(dtoModel.getbm_dm());
@@ -89,15 +94,16 @@ public class TXtQxBmController  extends BaseController{
 				model.setmc(dtoModel.getmc());
 				model.setms(dtoModel.getms());
 				model.setwz_px(dtoModel.getwz_px());
-				model.setlr_sj(dtoModel.getlr_sj());
-				model.setxg_sj(dtoModel.getxg_sj());
-				model.setlrry_xh(dtoModel.getlrry_xh());
-				model.setxgry_xh(dtoModel.getxgry_xh());
-				model.setsfyx_bj(dtoModel.getsfyx_bj());
+				model.setxg_sj(new Date());
+				model.setxgry_xh(sessionModel.getUserId());
 				model.setyyz_xh(dtoModel.getyyz_xh());
 				dao.updateOnSubmit(model);
 			}else{
 				BeanUtils.copyProperties(dtoModel,model);
+				model.setlrry_xh(sessionModel.getUserId());
+				model.setlr_sj(new Date());
+				model.setxg_sj(new Date());
+				model.setxgry_xh(sessionModel.getUserId());
 				model.setsfyx_bj(1);
 				model.setbm_dm(Utility.createUniqueId());
 				dao.insertOnSubmit(model);

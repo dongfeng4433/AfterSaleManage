@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 * 主数据 - 企业 - 库存每个企业自身的货品配件库存数据
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/3.
+* Memo: Auto Created by CodeGenerator on 2020/4/4.
 */
 
 public class TDataEnterpriseStockModel extends BaseModel implements IBaseModel{

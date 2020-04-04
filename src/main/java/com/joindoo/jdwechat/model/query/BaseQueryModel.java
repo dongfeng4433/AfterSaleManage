@@ -14,6 +14,15 @@ public class BaseQueryModel implements IBaseQueryModel{
     private int limit;
     private Date startTime;
     private Date endTime;
+    private String enterprise_id;
+
+    public String getEnterprise_id() {
+        return enterprise_id;
+    }
+
+    public void setEnterprise_id(String enterprise_id) {
+        this.enterprise_id = enterprise_id;
+    }
 
     public String getJd_token() {
         return jd_token;

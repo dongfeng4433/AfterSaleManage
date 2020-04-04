@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>仓库 </title>
+    <title>主数据 - 企业 - 仓库  主要有企业管理员维护 </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" th:href="@{/css/element/index.css}"/>
     <link rel="stylesheet" th:href="@{/css/style/common.css}"/>
@@ -47,6 +47,8 @@
 				<el-table-column prop="address" label="地址" align="center"></el-table-column>
 				<el-table-column prop="description" label="仓库描述" align="center"></el-table-column>
 				<el-table-column prop="telephone_number" label="联系电话" align="center"></el-table-column>
+				<el-table-column prop="create_time" label="创建时间" align="center"></el-table-column>
+				<el-table-column prop="last_edit_time" label="最后修改时间" align="center"></el-table-column>
                
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">

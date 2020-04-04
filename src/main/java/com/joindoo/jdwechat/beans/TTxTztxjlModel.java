@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 * 通讯 - 通知提醒记录， 除工作流外的提醒记录，便于提醒, 用于系统内提醒, 与移动终端提醒不相同，这是所有提醒通知的源
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/3.
+* Memo: Auto Created by CodeGenerator on 2020/4/4.
 */
 
 public class TTxTztxjlModel extends BaseModel implements IBaseModel{

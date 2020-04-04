@@ -17,6 +17,7 @@ var vm = new Vue({
 				js_dm: '',
 				mc: '',
 				ms: '',
+				wz_px: '',
    
             }
         };
@@ -73,6 +74,7 @@ var vm = new Vue({
                 this.params = {
 					mc: '',
 					ms: '',
+					wz_px: '',
 
                 };
             } else {
@@ -81,6 +83,7 @@ var vm = new Vue({
                 this.params = {
 					mc: row.mc,
 					ms: row.ms,
+					wz_px: row.wz_px,
 
                 };
             }

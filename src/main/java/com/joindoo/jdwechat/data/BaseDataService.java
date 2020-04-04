@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 /**
 * Author: zhuqiang4433@gmail.com
-* Memo: Auto Created by CodeGenerator on 2020/4/3.
+* Memo: Auto Created by CodeGenerator on 2020/4/4.
 */
 
 public class BaseDataService extends com.joindoo.jdwechat.data.EdenDataService {
@@ -269,6 +269,10 @@ public class BaseDataService extends com.joindoo.jdwechat.data.EdenDataService {
 					if(null!=queryModel.getmc()){
 						where+=" and MC LIKE ?";
 						params.add("%"+queryModel.getmc()+"%");
+					}
+					if(null!=queryModel.getyyz_xh()){
+						where+=" and YYZ_XH=?";
+						params.add(queryModel.getyyz_xh());
 					}
 					scriptItemModel.setSqlWhere(where);
                 }
