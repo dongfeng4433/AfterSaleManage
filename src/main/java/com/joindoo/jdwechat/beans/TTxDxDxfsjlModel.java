@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 * 通讯 - 短信 - 短信发送记录
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/4.
+* Memo: Auto Created by CodeGenerator on 2020/4/5.
 */
 
 public class TTxDxDxfsjlModel extends BaseModel implements IBaseModel{

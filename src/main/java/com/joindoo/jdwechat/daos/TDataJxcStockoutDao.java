@@ -15,7 +15,7 @@ import java.util.List;
 * 主数据 - 进销存 - 出库单  在售后工单派单成功后，会自动生成出库单
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/4.
+* Memo: Auto Created by CodeGenerator on 2020/4/5.
 */
 
 public class TDataJxcStockoutDao extends BaseDao {

@@ -11,19 +11,27 @@ import java.math.BigDecimal;
 * 主数据 - 企业 - 工单 - 2 - 配件  本次工单所有的配件清单
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/4.
+* Memo: Auto Created by CodeGenerator on 2020/4/5.
 */
 
 public class TDataEnterpriseOrder2GoodsModel extends BaseModel implements IBaseModel{
 	 public static final String TABLE_NAME="T_DATA_ENTERPRISE_ORDER_2_GOODS";
-	 public static final String SCRIPT_INSERT="INSERT INTO t_data_enterprise_order_2_goods(goods_id,order_id,warehouse_id,unit_id,quantity,unit_id2,quantity2,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-	 public static final String SCRIPT_DELETE="DELETE FROM t_data_enterprise_order_2_goods WHERE  goods_id=? AND order_id=? ";
-	 public static final String SCRIPT_UPDATE="UPDATE t_data_enterprise_order_2_goods  SET {0} WHERE  goods_id=? AND order_id=? ";
-	 public static final String SCRIPT_SELECT="SELECT goods_id,order_id,warehouse_id,unit_id,quantity,unit_id2,quantity2,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount FROM t_data_enterprise_order_2_goods WHERE (1=1)";
+	 public static final String SCRIPT_INSERT="INSERT INTO t_data_enterprise_order_2_goods(order_details_id,goods_id,order_id,warehouse_id,unit_id,quantity,unit_id2,quantity2,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount,unit_name,unit2_name)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	 public static final String SCRIPT_DELETE="DELETE FROM t_data_enterprise_order_2_goods WHERE  order_details_id=? ";
+	 public static final String SCRIPT_UPDATE="UPDATE t_data_enterprise_order_2_goods  SET {0} WHERE  order_details_id=? ";
+	 public static final String SCRIPT_SELECT="SELECT order_details_id,goods_id,order_id,warehouse_id,unit_id,quantity,unit_id2,quantity2,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount,unit_name,unit2_name FROM t_data_enterprise_order_2_goods WHERE (1=1)";
 	 public String getDataTableName() {
  	 return TABLE_NAME;
 	 }
 
+
+	/*明细id*/ 
+	protected String order_details_id;
+	public String getorder_details_id (){ return order_details_id;}
+	public void setorder_details_id(String value){
+		this.order_details_id=value;
+ 		this.onChangeProperty("order_details_id",this.order_details_id,value);
+ 	}
 
 	/*货品id*/ 
 	protected String goods_id;
@@ -145,16 +153,32 @@ public class TDataEnterpriseOrder2GoodsModel extends BaseModel implements IBaseM
  		this.onChangeProperty("amount",this.amount,value);
  	}
 
+	/*主计量单位*/ 
+	protected String unit_name;
+	public String getunit_name (){ return unit_name;}
+	public void setunit_name(String value){
+		this.unit_name=value;
+ 		this.onChangeProperty("unit_name",this.unit_name,value);
+ 	}
+
+	/*辅计量单位*/ 
+	protected String unit2_name;
+	public String getunit2_name (){ return unit2_name;}
+	public void setunit2_name(String value){
+		this.unit2_name=value;
+ 		this.onChangeProperty("unit2_name",this.unit2_name,value);
+ 	}
+
 
 
 	public TDataEnterpriseOrder2GoodsModel(){
 		super();
-		this._keyProperty.add("goods_id");
-		this._keyProperty.add("order_id");
+		this._keyProperty.add("order_details_id");
 		initFieldsType();
 	}
 
 	private void initFieldsType(){
+		this._fieldType.put("order_details_id","String");
 		this._fieldType.put("goods_id","String");
 		this._fieldType.put("order_id","String");
 		this._fieldType.put("warehouse_id","String");
@@ -170,6 +194,8 @@ public class TDataEnterpriseOrder2GoodsModel extends BaseModel implements IBaseM
 		this._fieldType.put("last_edit_user_id","String");
 		this._fieldType.put("price","Double");
 		this._fieldType.put("amount","Double");
+		this._fieldType.put("unit_name","String");
+		this._fieldType.put("unit2_name","String");
 	}
 	@Override
 	public void initAsInsert() {
@@ -178,6 +204,9 @@ public class TDataEnterpriseOrder2GoodsModel extends BaseModel implements IBaseM
 	@Override
 	public void fillModel(ResultSet resultSet) {
 		try { 
+		 if(isExistColumn(resultSet,"order_details_id")){
+			 this.order_details_id=resultSet.getString("order_details_id");
+		}
 		 if(isExistColumn(resultSet,"goods_id")){
 			 this.goods_id=resultSet.getString("goods_id");
 		}
@@ -235,6 +264,12 @@ public class TDataEnterpriseOrder2GoodsModel extends BaseModel implements IBaseM
 				this.amount=null;
 			}
 		}
+		 if(isExistColumn(resultSet,"unit_name")){
+			 this.unit_name=resultSet.getString("unit_name");
+		}
+		 if(isExistColumn(resultSet,"unit2_name")){
+			 this.unit2_name=resultSet.getString("unit2_name");
+		}
       } catch (SQLException e) {
               e.printStackTrace();
           }
@@ -242,14 +277,14 @@ public class TDataEnterpriseOrder2GoodsModel extends BaseModel implements IBaseM
   @Override
    public String getExist() {
 	    String sql="select 1 from "+TABLE_NAME;
-		    sql+=" where   goods_id="+Utility.getSqlFielStatement("string",this.goods_id)+" and order_id="+Utility.getSqlFielStatement("string",this.order_id)+"  ";
+		    sql+=" where   order_details_id="+Utility.getSqlFielStatement("string",this.order_details_id)+"  ";
 	    return sql;
    }
 
 
    @Override
    public String getInsert() {
-       String sql="insert into "+TABLE_NAME+"(goods_id,order_id,warehouse_id,unit_id,quantity,unit_id2,quantity2,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount) values("+Utility.getSqlFielStatement("string",this.goods_id)+","+Utility.getSqlFielStatement("string",this.order_id)+","+Utility.getSqlFielStatement("string",this.warehouse_id)+","+Utility.getSqlFielStatement("string",this.unit_id)+","+this.quantity+","+Utility.getSqlFielStatement("string",this.unit_id2)+","+this.quantity2+","+Utility.getSqlFielStatement("string",this.description)+","+this.is_valid+","+Utility.getSqlFielStatement("date",this.create_time)+","+Utility.getSqlFielStatement("date",this.last_edit_time)+","+Utility.getSqlFielStatement("string",this.creation_user_id)+","+Utility.getSqlFielStatement("string",this.last_edit_user_id)+","+this.price+","+this.amount+")";
+       String sql="insert into "+TABLE_NAME+"(order_details_id,goods_id,order_id,warehouse_id,unit_id,quantity,unit_id2,quantity2,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount,unit_name,unit2_name) values("+Utility.getSqlFielStatement("string",this.order_details_id)+","+Utility.getSqlFielStatement("string",this.goods_id)+","+Utility.getSqlFielStatement("string",this.order_id)+","+Utility.getSqlFielStatement("string",this.warehouse_id)+","+Utility.getSqlFielStatement("string",this.unit_id)+","+this.quantity+","+Utility.getSqlFielStatement("string",this.unit_id2)+","+this.quantity2+","+Utility.getSqlFielStatement("string",this.description)+","+this.is_valid+","+Utility.getSqlFielStatement("date",this.create_time)+","+Utility.getSqlFielStatement("date",this.last_edit_time)+","+Utility.getSqlFielStatement("string",this.creation_user_id)+","+Utility.getSqlFielStatement("string",this.last_edit_user_id)+","+this.price+","+this.amount+","+Utility.getSqlFielStatement("string",this.unit_name)+","+Utility.getSqlFielStatement("string",this.unit2_name)+")";
        return sql;
    }
 
@@ -270,7 +305,7 @@ public class TDataEnterpriseOrder2GoodsModel extends BaseModel implements IBaseM
    sql=sql.substring(0,sql.length()-1);
    else
        return "";
-   sql+= " where  goods_id="+Utility.getSqlFielStatement("string",this.goods_id)+" and order_id="+Utility.getSqlFielStatement("string",this.order_id)+" ";
+   sql+= " where  order_details_id="+Utility.getSqlFielStatement("string",this.order_details_id)+" ";
    }
    return sql;
 }
@@ -278,15 +313,15 @@ public class TDataEnterpriseOrder2GoodsModel extends BaseModel implements IBaseM
 
 	@Override
 	public String getSelect() {
-		String sql="select goods_id,order_id,warehouse_id,unit_id,quantity,unit_id2,quantity2,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount from "+TABLE_NAME;
-		if(!Utility.isNullOrEmpty(goods_id)&&!Utility.isNullOrEmpty(order_id)){
-			sql+=" where  goods_id="+Utility.getSqlFielStatement("string",this.goods_id)+" and order_id="+Utility.getSqlFielStatement("string",this.order_id)+" ";
+		String sql="select order_details_id,goods_id,order_id,warehouse_id,unit_id,quantity,unit_id2,quantity2,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount,unit_name,unit2_name from "+TABLE_NAME;
+		if(!Utility.isNullOrEmpty(order_details_id)){
+			sql+=" where  order_details_id="+Utility.getSqlFielStatement("string",this.order_details_id)+" ";
 		}
 		return sql;
 	}
 	@Override
 	public String getSelectByCondition(String condition) {
-		String sql="select goods_id,order_id,warehouse_id,unit_id,quantity,unit_id2,quantity2,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount from "+TABLE_NAME;
+		String sql="select order_details_id,goods_id,order_id,warehouse_id,unit_id,quantity,unit_id2,quantity2,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount,unit_name,unit2_name from "+TABLE_NAME;
 		if(condition!=null&&condition!=""){
 			sql+=" where "+condition;
 		}
@@ -296,7 +331,7 @@ public class TDataEnterpriseOrder2GoodsModel extends BaseModel implements IBaseM
 
     @Override
    public String getDelete() {
-	 String sql="delete from "+TABLE_NAME+" where  goods_id="+Utility.getSqlFielStatement("string",this.goods_id)+" and order_id="+Utility.getSqlFielStatement("string",this.order_id)+" ";
+	 String sql="delete from "+TABLE_NAME+" where  order_details_id="+Utility.getSqlFielStatement("string",this.order_details_id)+" ";
 	 return sql;
    }
 

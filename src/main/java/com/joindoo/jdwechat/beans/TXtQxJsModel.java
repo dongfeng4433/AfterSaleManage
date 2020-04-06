@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 * 系统 - 权限 - 系统角色
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/4.
+* Memo: Auto Created by CodeGenerator on 2020/4/5.
 */
 
 public class TXtQxJsModel extends BaseModel implements IBaseModel{

@@ -45,5 +45,6 @@ public class WeChatFields {
     public final static String Script_SelectT_DATA_ENTERPRISE_GOODS="SelectT_DATA_ENTERPRISE_GOODS";
     public final static String Script_SelectT_DATA_ENTERPRISE_ORDER="SelectT_DATA_ENTERPRISE_ORDER";
     public final static String Script_SelectT_DATA_SUPPLIER="SelectT_DATA_SUPPLIER";
+    public final static String Script_SelectT_DATA_ENTERPRISE_STOCK="SelectT_DATA_ENTERPRISE_STOCK";
 
 }

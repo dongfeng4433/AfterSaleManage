@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 * 系统 - 微信用户 微信用户openid,昵称等
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/4.
+* Memo: Auto Created by CodeGenerator on 2020/4/5.
 */
 
 public class TXtWxyhModel extends BaseModel implements IBaseModel{

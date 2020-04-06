@@ -15,7 +15,7 @@ import java.util.List;
 * 主数据 - 企业 - 工单 - 2 - 配件  本次工单所有的配件清单
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/4.
+* Memo: Auto Created by CodeGenerator on 2020/4/5.
 */
 
 public class TDataEnterpriseOrder2GoodsDao extends BaseDao {
@@ -42,6 +42,11 @@ public class TDataEnterpriseOrder2GoodsDao extends BaseDao {
 	 PreparedStatement statement=DBHelper.getPreparedStatement(DataContext.getCurrentConnection(),bean.SCRIPT_INSERT);
 	 Object t=null;
 	 int index=1;
+	 t=bean.getorder_details_id();
+	 if (t==null) statement.setNull(index, Types.VARCHAR);
+	 else statement.setObject(index, t, Types.VARCHAR);
+	 index++;
+
 	 t=bean.getgoods_id();
 	 if (t==null) statement.setNull(index, Types.VARCHAR);
 	 else statement.setObject(index, t, Types.VARCHAR);
@@ -117,6 +122,16 @@ public class TDataEnterpriseOrder2GoodsDao extends BaseDao {
 	 else statement.setObject(index, t, Types.NUMERIC);
 	 index++;
 
+	 t=bean.getunit_name();
+	 if (t==null) statement.setNull(index, Types.VARCHAR);
+	 else statement.setObject(index, t, Types.VARCHAR);
+	 index++;
+
+	 t=bean.getunit2_name();
+	 if (t==null) statement.setNull(index, Types.VARCHAR);
+	 else statement.setObject(index, t, Types.VARCHAR);
+	 index++;
+
 	 int r= statement.executeUpdate();
 	 DBHelper.free(statement);
 	 return r > 0;
@@ -136,6 +151,8 @@ public class TDataEnterpriseOrder2GoodsDao extends BaseDao {
 	 if(changeFields.size()==0)return false;
 	 Object t=null;
 	 StringBuilder sb=new StringBuilder();
+	 if(changeFields.containsKey("goods_id"))sb.append("goods_id=?,");
+	 if(changeFields.containsKey("order_id"))sb.append("order_id=?,");
 	 if(changeFields.containsKey("warehouse_id"))sb.append("warehouse_id=?,");
 	 if(changeFields.containsKey("unit_id"))sb.append("unit_id=?,");
 	 if(changeFields.containsKey("quantity"))sb.append("quantity=?,");
@@ -149,11 +166,25 @@ public class TDataEnterpriseOrder2GoodsDao extends BaseDao {
 	 if(changeFields.containsKey("last_edit_user_id"))sb.append("last_edit_user_id=?,");
 	 if(changeFields.containsKey("price"))sb.append("price=?,");
 	 if(changeFields.containsKey("amount"))sb.append("amount=?,");
+	 if(changeFields.containsKey("unit_name"))sb.append("unit_name=?,");
+	 if(changeFields.containsKey("unit2_name"))sb.append("unit2_name=?,");
 	 sb.deleteCharAt(sb.length() - 1);
 	 String sql= Utility.String_Format(bean.SCRIPT_UPDATE,sb.toString());
 	 PreparedStatement statement=DBHelper.getPreparedStatement(DataContext.getCurrentConnection(),sql);
 	 int index=1;
 	 /*非主键*/
+	 if(changeFields.containsKey("goods_id")){
+		 t=bean.getgoods_id();
+		 if (t==null) statement.setNull(index, Types.VARCHAR);
+		 else statement.setObject(index, t, Types.VARCHAR);
+		 index++;
+	 }
+	 if(changeFields.containsKey("order_id")){
+		 t=bean.getorder_id();
+		 if (t==null) statement.setNull(index, Types.VARCHAR);
+		 else statement.setObject(index, t, Types.VARCHAR);
+		 index++;
+	 }
 	 if(changeFields.containsKey("warehouse_id")){
 		 t=bean.getwarehouse_id();
 		 if (t==null) statement.setNull(index, Types.VARCHAR);
@@ -232,13 +263,20 @@ public class TDataEnterpriseOrder2GoodsDao extends BaseDao {
 		 else statement.setObject(index, t, Types.NUMERIC);
 		 index++;
 	 }
+	 if(changeFields.containsKey("unit_name")){
+		 t=bean.getunit_name();
+		 if (t==null) statement.setNull(index, Types.VARCHAR);
+		 else statement.setObject(index, t, Types.VARCHAR);
+		 index++;
+	 }
+	 if(changeFields.containsKey("unit2_name")){
+		 t=bean.getunit2_name();
+		 if (t==null) statement.setNull(index, Types.VARCHAR);
+		 else statement.setObject(index, t, Types.VARCHAR);
+		 index++;
+	 }
 	 /*主键条件*/
-	 t=bean.getgoods_id();
-	 if (t==null) statement.setNull(index, Types.VARCHAR);
-	 else statement.setObject(index, t, Types.VARCHAR);
-	 index++;
-
-	 t=bean.getorder_id();
+	 t=bean.getorder_details_id();
 	 if (t==null) statement.setNull(index, Types.VARCHAR);
 	 else statement.setObject(index, t, Types.VARCHAR);
 	 index++;
@@ -316,12 +354,7 @@ public class TDataEnterpriseOrder2GoodsDao extends BaseDao {
 	 PreparedStatement statement=DBHelper.getPreparedStatement(DataContext.getCurrentConnection(),bean.SCRIPT_DELETE);
 	 Object t=null;
 	 int index=1;
-	 t=bean.getgoods_id();
-	 if (t==null) statement.setNull(index, Types.VARCHAR);
-	 else statement.setObject(index, t, Types.VARCHAR);
-	 index++;
-
-	 t=bean.getorder_id();
+	 t=bean.getorder_details_id();
 	 if (t==null) statement.setNull(index, Types.VARCHAR);
 	 else statement.setObject(index, t, Types.VARCHAR);
 	 index++;

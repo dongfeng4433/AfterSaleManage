@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 * 主数据 - 客户  可以是个人也可以是企业
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/4.
+* Memo: Auto Created by CodeGenerator on 2020/4/5.
 */
 
 public class TDataCustomerModel extends BaseModel implements IBaseModel{

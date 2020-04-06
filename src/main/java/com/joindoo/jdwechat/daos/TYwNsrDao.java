@@ -15,7 +15,7 @@ import java.util.List;
 * 业务_纳税人   企业或个体户主表 营业执照
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/4.
+* Memo: Auto Created by CodeGenerator on 2020/4/5.
 */
 
 public class TYwNsrDao extends BaseDao {

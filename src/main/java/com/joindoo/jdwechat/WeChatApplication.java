@@ -78,6 +78,9 @@ public class WeChatApplication {
         @Override
         public Date convert(String source) {
             try {
+                if(source.contains("T")){
+                    source=source.replace("T"," ");
+                }
                 return df.parse(source);
             } catch (ParseException e) {
                 try {

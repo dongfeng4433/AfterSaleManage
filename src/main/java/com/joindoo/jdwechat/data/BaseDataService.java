@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 /**
 * Author: zhuqiang4433@gmail.com
-* Memo: Auto Created by CodeGenerator on 2020/4/4.
+* Memo: Auto Created by CodeGenerator on 2020/4/5.
 */
 
 public class BaseDataService extends com.joindoo.jdwechat.data.EdenDataService {
@@ -207,6 +207,57 @@ public class BaseDataService extends com.joindoo.jdwechat.data.EdenDataService {
 		for (IBaseModel b : collection){
 			TDataEnterpriseOrderDtoModel dto=new TDataEnterpriseOrderDtoModel();
 			BeanUtils.copyProperties((TDataEnterpriseOrderModel)b,dto);
+			models.add(dto);
+        }
+        return models;
+    }
+	//t_data_enterprise_stock 主数据 - 企业 - 库存每个企业自身的货品配件库存数据
+	public Collection<TDataEnterpriseStockDtoModel> SelectT_DATA_ENTERPRISE_STOCK(PagingOptions pagingOptions, TDataEnterpriseStockQueryModel queryModel , String sql) {
+		if(Utility.isNullOrEmpty(sql)){
+			sql=WeChatFields.Script_SelectT_DATA_ENTERPRISE_STOCK;
+		}
+		ScriptItemModel scriptItemModel= SystemSetting.JD_ServerCache.getSciptItemModel(sql);
+		if(null==scriptItemModel){
+			logger.info(sql+" 查询脚本没有找到");
+			return null;
+		}
+		DataParamsHandler dataParamsHandler=new DataParamsHandler(){
+			@Override
+			public void resolveParams(ScriptItemModel scriptItemModel) {
+				ArrayList<Object> params=new ArrayList<>();
+				if(null!=queryModel){
+					String where="";
+					if(null!=queryModel.getstock_id()){
+						where+=" and STOCK_ID=?";
+						params.add(queryModel.getstock_id());
+					}
+					if(null!=queryModel.getname()){
+						where+=" and NAME LIKE ?";
+						params.add("%"+queryModel.getname()+"%");
+					}
+					if(null!=queryModel.getgoods_id()){
+						where+=" and GOODS_ID=?";
+						params.add(queryModel.getgoods_id());
+					}
+					if(null!=queryModel.getenterprise_id()){
+						where+=" and ENTERPRISE_ID=?";
+						params.add(queryModel.getenterprise_id());
+					}
+					if(null!=queryModel.getwarehouse_id()){
+						where+=" and WAREHOUSE_ID=?";
+						params.add(queryModel.getwarehouse_id());
+					}
+					scriptItemModel.setSqlWhere(where);
+                }
+				scriptItemModel.setParams(params.toArray());
+			}
+		};
+		queryModel.dataParamsHandler=dataParamsHandler;
+		Collection<IBaseModel> collection= SelectBaseData(DataContext.getCurrentConnection(),TDataEnterpriseStockModel.class,scriptItemModel,pagingOptions,queryModel);
+		Collection<TDataEnterpriseStockDtoModel> models=new ArrayList<>();
+		for (IBaseModel b : collection){
+			TDataEnterpriseStockDtoModel dto=new TDataEnterpriseStockDtoModel();
+			BeanUtils.copyProperties((TDataEnterpriseStockModel)b,dto);
 			models.add(dto);
         }
         return models;

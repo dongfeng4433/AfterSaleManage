@@ -11,19 +11,27 @@ import java.math.BigDecimal;
 * 主数据 - 企业 - 库存每个企业自身的货品配件库存数据
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/4.
+* Memo: Auto Created by CodeGenerator on 2020/4/5.
 */
 
 public class TDataEnterpriseStockModel extends BaseModel implements IBaseModel{
 	 public static final String TABLE_NAME="T_DATA_ENTERPRISE_STOCK";
-	 public static final String SCRIPT_INSERT="INSERT INTO t_data_enterprise_stock(goods_id,enterprise_id,warehouse_id,name,unit_id,quantity,unit_id2,quantity2,address,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-	 public static final String SCRIPT_DELETE="DELETE FROM t_data_enterprise_stock WHERE  goods_id=? AND enterprise_id=? AND warehouse_id=? ";
-	 public static final String SCRIPT_UPDATE="UPDATE t_data_enterprise_stock  SET {0} WHERE  goods_id=? AND enterprise_id=? AND warehouse_id=? ";
-	 public static final String SCRIPT_SELECT="SELECT goods_id,enterprise_id,warehouse_id,name,unit_id,quantity,unit_id2,quantity2,address,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount FROM t_data_enterprise_stock WHERE (1=1)";
+	 public static final String SCRIPT_INSERT="INSERT INTO t_data_enterprise_stock(stock_id,goods_id,enterprise_id,warehouse_id,name,unit_id,quantity,unit_id2,quantity2,address,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount,unit_name,unit2_name)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	 public static final String SCRIPT_DELETE="DELETE FROM t_data_enterprise_stock WHERE  stock_id=? ";
+	 public static final String SCRIPT_UPDATE="UPDATE t_data_enterprise_stock  SET {0} WHERE  stock_id=? ";
+	 public static final String SCRIPT_SELECT="SELECT stock_id,goods_id,enterprise_id,warehouse_id,name,unit_id,quantity,unit_id2,quantity2,address,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount,unit_name,unit2_name FROM t_data_enterprise_stock WHERE (1=1)";
 	 public String getDataTableName() {
  	 return TABLE_NAME;
 	 }
 
+
+	/*库存序号*/ 
+	protected String stock_id;
+	public String getstock_id (){ return stock_id;}
+	public void setstock_id(String value){
+		this.stock_id=value;
+ 		this.onChangeProperty("stock_id",this.stock_id,value);
+ 	}
 
 	/*货品id*/ 
 	protected String goods_id;
@@ -161,17 +169,32 @@ public class TDataEnterpriseStockModel extends BaseModel implements IBaseModel{
  		this.onChangeProperty("amount",this.amount,value);
  	}
 
+	/*主计量单位*/ 
+	protected String unit_name;
+	public String getunit_name (){ return unit_name;}
+	public void setunit_name(String value){
+		this.unit_name=value;
+ 		this.onChangeProperty("unit_name",this.unit_name,value);
+ 	}
+
+	/*辅计量单位*/ 
+	protected String unit2_name;
+	public String getunit2_name (){ return unit2_name;}
+	public void setunit2_name(String value){
+		this.unit2_name=value;
+ 		this.onChangeProperty("unit2_name",this.unit2_name,value);
+ 	}
+
 
 
 	public TDataEnterpriseStockModel(){
 		super();
-		this._keyProperty.add("goods_id");
-		this._keyProperty.add("enterprise_id");
-		this._keyProperty.add("warehouse_id");
+		this._keyProperty.add("stock_id");
 		initFieldsType();
 	}
 
 	private void initFieldsType(){
+		this._fieldType.put("stock_id","String");
 		this._fieldType.put("goods_id","String");
 		this._fieldType.put("enterprise_id","String");
 		this._fieldType.put("warehouse_id","String");
@@ -189,6 +212,8 @@ public class TDataEnterpriseStockModel extends BaseModel implements IBaseModel{
 		this._fieldType.put("last_edit_user_id","String");
 		this._fieldType.put("price","Double");
 		this._fieldType.put("amount","Double");
+		this._fieldType.put("unit_name","String");
+		this._fieldType.put("unit2_name","String");
 	}
 	@Override
 	public void initAsInsert() {
@@ -197,6 +222,9 @@ public class TDataEnterpriseStockModel extends BaseModel implements IBaseModel{
 	@Override
 	public void fillModel(ResultSet resultSet) {
 		try { 
+		 if(isExistColumn(resultSet,"stock_id")){
+			 this.stock_id=resultSet.getString("stock_id");
+		}
 		 if(isExistColumn(resultSet,"goods_id")){
 			 this.goods_id=resultSet.getString("goods_id");
 		}
@@ -260,6 +288,12 @@ public class TDataEnterpriseStockModel extends BaseModel implements IBaseModel{
 				this.amount=null;
 			}
 		}
+		 if(isExistColumn(resultSet,"unit_name")){
+			 this.unit_name=resultSet.getString("unit_name");
+		}
+		 if(isExistColumn(resultSet,"unit2_name")){
+			 this.unit2_name=resultSet.getString("unit2_name");
+		}
       } catch (SQLException e) {
               e.printStackTrace();
           }
@@ -267,14 +301,14 @@ public class TDataEnterpriseStockModel extends BaseModel implements IBaseModel{
   @Override
    public String getExist() {
 	    String sql="select 1 from "+TABLE_NAME;
-		    sql+=" where   goods_id="+Utility.getSqlFielStatement("string",this.goods_id)+" and enterprise_id="+Utility.getSqlFielStatement("string",this.enterprise_id)+" and warehouse_id="+Utility.getSqlFielStatement("string",this.warehouse_id)+"  ";
+		    sql+=" where   stock_id="+Utility.getSqlFielStatement("string",this.stock_id)+"  ";
 	    return sql;
    }
 
 
    @Override
    public String getInsert() {
-       String sql="insert into "+TABLE_NAME+"(goods_id,enterprise_id,warehouse_id,name,unit_id,quantity,unit_id2,quantity2,address,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount) values("+Utility.getSqlFielStatement("string",this.goods_id)+","+Utility.getSqlFielStatement("string",this.enterprise_id)+","+Utility.getSqlFielStatement("string",this.warehouse_id)+","+Utility.getSqlFielStatement("string",this.name)+","+Utility.getSqlFielStatement("string",this.unit_id)+","+this.quantity+","+Utility.getSqlFielStatement("string",this.unit_id2)+","+this.quantity2+","+Utility.getSqlFielStatement("string",this.address)+","+Utility.getSqlFielStatement("string",this.description)+","+this.is_valid+","+Utility.getSqlFielStatement("date",this.create_time)+","+Utility.getSqlFielStatement("date",this.last_edit_time)+","+Utility.getSqlFielStatement("string",this.creation_user_id)+","+Utility.getSqlFielStatement("string",this.last_edit_user_id)+","+this.price+","+this.amount+")";
+       String sql="insert into "+TABLE_NAME+"(stock_id,goods_id,enterprise_id,warehouse_id,name,unit_id,quantity,unit_id2,quantity2,address,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount,unit_name,unit2_name) values("+Utility.getSqlFielStatement("string",this.stock_id)+","+Utility.getSqlFielStatement("string",this.goods_id)+","+Utility.getSqlFielStatement("string",this.enterprise_id)+","+Utility.getSqlFielStatement("string",this.warehouse_id)+","+Utility.getSqlFielStatement("string",this.name)+","+Utility.getSqlFielStatement("string",this.unit_id)+","+this.quantity+","+Utility.getSqlFielStatement("string",this.unit_id2)+","+this.quantity2+","+Utility.getSqlFielStatement("string",this.address)+","+Utility.getSqlFielStatement("string",this.description)+","+this.is_valid+","+Utility.getSqlFielStatement("date",this.create_time)+","+Utility.getSqlFielStatement("date",this.last_edit_time)+","+Utility.getSqlFielStatement("string",this.creation_user_id)+","+Utility.getSqlFielStatement("string",this.last_edit_user_id)+","+this.price+","+this.amount+","+Utility.getSqlFielStatement("string",this.unit_name)+","+Utility.getSqlFielStatement("string",this.unit2_name)+")";
        return sql;
    }
 
@@ -295,7 +329,7 @@ public class TDataEnterpriseStockModel extends BaseModel implements IBaseModel{
    sql=sql.substring(0,sql.length()-1);
    else
        return "";
-   sql+= " where  goods_id="+Utility.getSqlFielStatement("string",this.goods_id)+" and enterprise_id="+Utility.getSqlFielStatement("string",this.enterprise_id)+" and warehouse_id="+Utility.getSqlFielStatement("string",this.warehouse_id)+" ";
+   sql+= " where  stock_id="+Utility.getSqlFielStatement("string",this.stock_id)+" ";
    }
    return sql;
 }
@@ -303,15 +337,15 @@ public class TDataEnterpriseStockModel extends BaseModel implements IBaseModel{
 
 	@Override
 	public String getSelect() {
-		String sql="select goods_id,enterprise_id,warehouse_id,name,unit_id,quantity,unit_id2,quantity2,address,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount from "+TABLE_NAME;
-		if(!Utility.isNullOrEmpty(goods_id)&&!Utility.isNullOrEmpty(enterprise_id)&&!Utility.isNullOrEmpty(warehouse_id)){
-			sql+=" where  goods_id="+Utility.getSqlFielStatement("string",this.goods_id)+" and enterprise_id="+Utility.getSqlFielStatement("string",this.enterprise_id)+" and warehouse_id="+Utility.getSqlFielStatement("string",this.warehouse_id)+" ";
+		String sql="select stock_id,goods_id,enterprise_id,warehouse_id,name,unit_id,quantity,unit_id2,quantity2,address,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount,unit_name,unit2_name from "+TABLE_NAME;
+		if(!Utility.isNullOrEmpty(stock_id)){
+			sql+=" where  stock_id="+Utility.getSqlFielStatement("string",this.stock_id)+" ";
 		}
 		return sql;
 	}
 	@Override
 	public String getSelectByCondition(String condition) {
-		String sql="select goods_id,enterprise_id,warehouse_id,name,unit_id,quantity,unit_id2,quantity2,address,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount from "+TABLE_NAME;
+		String sql="select stock_id,goods_id,enterprise_id,warehouse_id,name,unit_id,quantity,unit_id2,quantity2,address,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id,price,amount,unit_name,unit2_name from "+TABLE_NAME;
 		if(condition!=null&&condition!=""){
 			sql+=" where "+condition;
 		}
@@ -321,7 +355,7 @@ public class TDataEnterpriseStockModel extends BaseModel implements IBaseModel{
 
     @Override
    public String getDelete() {
-	 String sql="delete from "+TABLE_NAME+" where  goods_id="+Utility.getSqlFielStatement("string",this.goods_id)+" and enterprise_id="+Utility.getSqlFielStatement("string",this.enterprise_id)+" and warehouse_id="+Utility.getSqlFielStatement("string",this.warehouse_id)+" ";
+	 String sql="delete from "+TABLE_NAME+" where  stock_id="+Utility.getSqlFielStatement("string",this.stock_id)+" ";
 	 return sql;
    }
 

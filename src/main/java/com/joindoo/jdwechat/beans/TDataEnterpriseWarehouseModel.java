@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 * 主数据 - 企业 - 仓库  主要有企业管理员维护 
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/4.
+* Memo: Auto Created by CodeGenerator on 2020/4/5.
 */
 
 public class TDataEnterpriseWarehouseModel extends BaseModel implements IBaseModel{

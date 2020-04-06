@@ -15,7 +15,7 @@ import java.util.List;
 * 系统 - 权限 - 系统模块（菜单）
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/4.
+* Memo: Auto Created by CodeGenerator on 2020/4/5.
 */
 
 public class TXtQxXtmkDao extends BaseDao {

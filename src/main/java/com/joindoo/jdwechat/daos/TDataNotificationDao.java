@@ -15,7 +15,7 @@ import java.util.List;
 * 主数据 - 通知  通知消息  此处可能用钉钉群内机器人进行通知
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/4.
+* Memo: Auto Created by CodeGenerator on 2020/4/5.
 */
 
 public class TDataNotificationDao extends BaseDao {

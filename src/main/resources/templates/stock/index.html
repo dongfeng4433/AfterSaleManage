@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>主数据 - 企业 - 库存每个企业自身的货品配件库存数据</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/css/element/index.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style/common.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style/common_search.css}"/>
+
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.shared.js}"></script>
+    <script th:src="@{/js/jquery.shared.html.js}"></script>
+    <script th:src="@{/js/vue.js}"></script>
+    <script th:src="@{/js/element/index.js}"></script>
+    <script th:src="@{/pageview/common/common.js}"></script>
+    <script th:src="@{/pageview/common/component.js}"></script>
+    <style type="text/css">#stock{ width:100%; height:100%; }</style>
+</head>
+
+<body>
+<div id="stock" v-cloak="true">
+    <!--头部-->
+    <nav-top></nav-top>
+    <!--内容-->
+    <div class="home-content">
+        <div class="btn">
+			<label>名称：</label>
+			<el-input v-model="name" style="width: 150px;" size="small" placeholder=""></el-input>
+
+            <el-button type="primary" v-on:click="getDataList(false)">查询</el-button>
+			<el-button plain="" v-on:click="addStockBtn(false, false)">添加</el-button>
+
+        </div>
+        <div class="_table">
+            <el-table :data="dataList" border="true" style="width: 100%">
+                <el-table-column label="序号" width="55" align="center">
+                    <template slot-scope="scope">
+                        {{(page-1)*10+scope.$index+1}}
+                    </template>
+                </el-table-column>
+$$common_fields$$               
+                <el-table-column label="操作" width="180" align="center">
+                    <template slot-scope="scope">
+						<el-button v-on:click="addStockBtn(true, scope.row)" class="textGreen" type="text" size="small">编辑</el-button>
+						<el-button v-on:click="deleteStock(scope.row)" type="text" size="small">删除</el-button>
+              
+                    </template>
+                </el-table-column>
+            </el-table>
+        </div>
+        <div class="block">
+            <el-pagination
+                    v-on:current-change="changePages"
+                    :current-page="page"
+                    :page-size="limit"
+                    layout="total, prev, pager, next, jumper"
+                    :total="total">
+            </el-pagination>
+        </div>
+    </div>  
+    <!--添加 编辑-->
+    <el-dialog :title="title" :visible.sync="isAdd" width="400px" :close-on-click-modal="false" :close-on-press-escape="false">
+        <div class="dialog-body" style="padding-top: 3px;">
+				<div class="add-item" >
+					<label>库存序号：<b style="color:red">*</b></label>
+					<el-input v-model="params.stock_id" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>货品id：<b style="color:red">*</b></label>
+					<el-input v-model="params.goods_id" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>企业id：<b style="color:red">*</b></label>
+					<el-input v-model="params.enterprise_id" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>仓库id：<b style="color:red">*</b></label>
+					<el-input v-model="params.warehouse_id" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>名称：<b style="color:red">*</b></label>
+					<el-input v-model="params.name" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>主计量单位：<b style="color:red">*</b></label>
+					<el-input v-model="params.unit_id" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>主数量：<b style="color:red">*</b></label>
+					<el-input v-model="params.quantity" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>辅计量单位：<b style="color:red">*</b></label>
+					<el-input v-model="params.unit_id2" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>辅数量：<b style="color:red">*</b></label>
+					<el-input v-model="params.quantity2" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>地址：<b style="color:red">*</b></label>
+					<el-input v-model="params.address" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>描述：<b style="color:red">*</b></label>
+					<el-input v-model="params.description" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>是否有效：<b style="color:red">*</b></label>
+					<el-input v-model="params.is_valid" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>创建时间：<b style="color:red">*</b></label>
+					<el-input v-model="params.create_time" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>最后修改时间：<b style="color:red">*</b></label>
+					<el-input v-model="params.last_edit_time" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>创建人：<b style="color:red">*</b></label>
+					<el-input v-model="params.creation_user_id" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>最后修改人：<b style="color:red">*</b></label>
+					<el-input v-model="params.last_edit_user_id" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>单价：<b style="color:red">*</b></label>
+					<el-input v-model="params.price" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>金额：<b style="color:red">*</b></label>
+					<el-input v-model="params.amount" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>主计量单位：<b style="color:red">*</b></label>
+					<el-input v-model="params.unit_name" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+				<div class="add-item" >
+					<label>辅计量单位：<b style="color:red">*</b></label>
+					<el-input v-model="params.unit2_name" style="width: 250px;" size="small" placeholder=""></el-input>
+				</div>
+          
+
+        </div>
+        <div slot="footer" class="dialog-footer btn btnBom">
+            <el-button v-on:click="isAdd = false">取消</el-button>
+            <el-button type="primary" v-on:click="addStock">保存</el-button>
+        </div>
+    </el-dialog>
+</div>
+</body>
+
+<script th:src="@{/pageview/stock/StockViewPage.js}"></script>
+</html>

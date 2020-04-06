@@ -15,7 +15,7 @@ import java.util.List;
 * 系统 - 权限 - 系统用户 - 2 - 部门
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/4.
+* Memo: Auto Created by CodeGenerator on 2020/4/5.
 */
 
 public class TXtQxRy2BmDao extends BaseDao {

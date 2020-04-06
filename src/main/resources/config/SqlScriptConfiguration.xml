@@ -182,4 +182,11 @@ WHERE (1=1) AND A.IS_VALID=1 ]]>
         </Value>
         <OrderBy><![CDATA[A.CREATE_TIME DESC]]></OrderBy>
     </Item>
+    <Item Id="SelectT_DATA_ENTERPRISE_STOCK">
+        <Value>
+            <![CDATA[SELECT A.* FROM T_DATA_ENTERPRISE_STOCK A
+WHERE (1=1) AND A.IS_VALID=1 ]]>
+        </Value>
+        <OrderBy><![CDATA[A.CREATE_TIME DESC]]></OrderBy>
+    </Item>
 </SQLScripts>

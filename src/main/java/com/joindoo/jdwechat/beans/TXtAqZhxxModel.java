@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 * 系统 - 安全 - 账号信息表
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/4.
+* Memo: Auto Created by CodeGenerator on 2020/4/5.
 */
 
 public class TXtAqZhxxModel extends BaseModel implements IBaseModel{
