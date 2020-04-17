@@ -137,14 +137,14 @@
             <el-button type="primary" v-on:click="addOrder">保存</el-button>
         </div>
     </el-dialog>
-	<el-dialog :title="title" :visible.sync="isAddDetails" width="600px" :close-on-click-modal="false" :close-on-press-escape="false">
+	<el-dialog :title="title2" :visible.sync="isAddDetails" width="700px" :close-on-click-modal="false" :close-on-press-escape="false">
 		<div class="dialog-body" style="padding-top: 3px;">
 
 				<div class="add-item" >
 					<label>工单编号：<b style="color:red">*</b></label>
-					<el-input v-model="params.order_no" style="width: 150px;" size="small" placeholder=""></el-input>
+					<el-input v-model="params.order_no" :readonly="true" style="width: 150px;" size="small" placeholder=""></el-input>
 					<label>名称：<b style="color:red">*</b></label>
-					<el-input v-model="params.name" style="width: 200px;" size="small" placeholder=""></el-input>
+					<el-input v-model="params.name" style="width: 200px;" :readonly="true" size="small" placeholder=""></el-input>
 				</div>
 
 			<template>
@@ -153,31 +153,58 @@
 						:data="tableData"
 						tooltip-effect="dark"
 						style="width: 100%"
+						:row-style="{height:'20px'}"
+						:cell-style="{padding:'0px'}"
 						@selection-change="handleSelectionChange">
 					<el-table-column
 							type="selection"
 							width="55">
 					</el-table-column>
 					<el-table-column
-							label="日期"
+							label="ID"
 							width="120">
-						<template slot-scope="scope">{{ scope.row.date }}</template>
+						<template slot-scope="scope">{{ scope.row.order_details_id }}</template>
 					</el-table-column>
 					<el-table-column
-							prop="name"
-							label="姓名"
-							width="120">
-					</el-table-column>
-					<el-table-column label="名称"  prop="name" width="300"  header-align="center">
+							prop="warehouse_id"
+							label="仓库"
+							width="100">
 						<template slot-scope="{row,$index}">
-							<input class="edit-cell" v-if="showEdit[$index]"    v-model="row.name">
-							<span v-if="!showEdit[$index]">{{row.name}}</span>
+							<el-select @change="handleWarehouseChange(row,row.warehouse_id)" v-model="row.warehouse_id" size="mini" placeholder="请选择">
+								<el-option
+										v-for="item in warehouses"
+										:key="item.warehouse_id"
+										:label="item.name"
+										:value="item.warehouse_id">
+								</el-option>
+							</el-select>
+						</template>
+					</el-table-column>
+					<el-table-column label="货品名称"  prop="goods_id" width="100"  header-align="center">
+						<template slot-scope="{row,$index}">
+							<el-select @change="handleGoodsChange(row,row.goods_id)" v-model="row.goods_id" size="mini" placeholder="请选择">
+								<el-option
+										v-for="item in goods"
+										:key="item.goods_id"
+										:label="item.name"
+										:value="item.goods_id">
+								</el-option>
+							</el-select>
 						</template>
 					</el-table-column>
 					<el-table-column
-							prop="address"
-							label="地址"
+							prop="unit_name"
+							label="单位"
+							width="60">
+					</el-table-column>
+					<el-table-column
+							prop="quantity"
+							label="数量"
 							show-overflow-tooltip>
+						<template slot-scope="{row,$index}">
+							<input class="edit-cell" v-if="showEdit[$index]"    v-model="row.quantity">
+							<span v-if="!showEdit[$index]">{{row.quantity}}</span>
+						</template>
 					</el-table-column>
 					<el-table-column
 							fixed="right"
@@ -194,8 +221,9 @@
 					</el-table-column>
 				</el-table>
 				<div style="margin-top: 20px">
-					<el-button @click="toggleSelection([tableData[1], tableData[2]])">添加</el-button>
-					<el-button @click="toggleSelection()">取消</el-button>
+					<el-button type="primary" icon="el-icon-plus" circle size="mini" @click="handleAddRow"></el-button>
+					<el-button @click="toggleSelection([tableData[1], tableData[2]])" size="mini">添加</el-button>
+<!--					<el-button @click="toggleSelection()">取消</el-button>-->
 				</div>
 			</template>
 

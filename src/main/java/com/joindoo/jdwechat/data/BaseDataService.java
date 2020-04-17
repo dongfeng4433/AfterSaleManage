@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 /**
 * Author: zhuqiang4433@gmail.com
-* Memo: Auto Created by CodeGenerator on 2020/4/5.
+* Memo: Auto Created by CodeGenerator on 2020/4/17.
 */
 
 public class BaseDataService extends com.joindoo.jdwechat.data.EdenDataService {
@@ -207,6 +207,80 @@ public class BaseDataService extends com.joindoo.jdwechat.data.EdenDataService {
 		for (IBaseModel b : collection){
 			TDataEnterpriseOrderDtoModel dto=new TDataEnterpriseOrderDtoModel();
 			BeanUtils.copyProperties((TDataEnterpriseOrderModel)b,dto);
+			models.add(dto);
+        }
+        return models;
+    }
+	//t_data_enterprise_order_2_goods 主数据 - 企业 - 工单 - 2 - 配件  本次工单所有的配件清单
+	public Collection<TDataEnterpriseOrder2GoodsDtoModel> SelectT_DATA_ENTERPRISE_ORDER_2_GOODS(PagingOptions pagingOptions, TDataEnterpriseOrder2GoodsQueryModel queryModel , String sql) {
+		if(Utility.isNullOrEmpty(sql)){
+			sql=WeChatFields.Script_SelectT_DATA_ENTERPRISE_ORDER_2_GOODS;
+		}
+		ScriptItemModel scriptItemModel= SystemSetting.JD_ServerCache.getSciptItemModel(sql);
+		if(null==scriptItemModel){
+			logger.info(sql+" 查询脚本没有找到");
+			return null;
+		}
+		DataParamsHandler dataParamsHandler=new DataParamsHandler(){
+			@Override
+			public void resolveParams(ScriptItemModel scriptItemModel) {
+				ArrayList<Object> params=new ArrayList<>();
+				if(null!=queryModel){
+					String where="";
+					if(null!=queryModel.getorder_details_id()){
+						where+=" and ORDER_DETAILS_ID=?";
+						params.add(queryModel.getorder_details_id());
+					}
+					scriptItemModel.setSqlWhere(where);
+                }
+				scriptItemModel.setParams(params.toArray());
+			}
+		};
+		queryModel.dataParamsHandler=dataParamsHandler;
+		Collection<IBaseModel> collection= SelectBaseData(DataContext.getCurrentConnection(),TDataEnterpriseOrder2GoodsModel.class,scriptItemModel,pagingOptions,queryModel);
+		Collection<TDataEnterpriseOrder2GoodsDtoModel> models=new ArrayList<>();
+		for (IBaseModel b : collection){
+			TDataEnterpriseOrder2GoodsDtoModel dto=new TDataEnterpriseOrder2GoodsDtoModel();
+			BeanUtils.copyProperties((TDataEnterpriseOrder2GoodsModel)b,dto);
+			models.add(dto);
+        }
+        return models;
+    }
+	//t_data_enterprise_order_workflow 主数据 - 企业 - 工单 - 2 - 流程
+	public Collection<TDataEnterpriseOrderWorkflowDtoModel> SelectT_DATA_ENTERPRISE_ORDER_WORKFLOW(PagingOptions pagingOptions, TDataEnterpriseOrderWorkflowQueryModel queryModel , String sql) {
+		if(Utility.isNullOrEmpty(sql)){
+			sql=WeChatFields.Script_SelectT_DATA_ENTERPRISE_ORDER_WORKFLOW;
+		}
+		ScriptItemModel scriptItemModel= SystemSetting.JD_ServerCache.getSciptItemModel(sql);
+		if(null==scriptItemModel){
+			logger.info(sql+" 查询脚本没有找到");
+			return null;
+		}
+		DataParamsHandler dataParamsHandler=new DataParamsHandler(){
+			@Override
+			public void resolveParams(ScriptItemModel scriptItemModel) {
+				ArrayList<Object> params=new ArrayList<>();
+				if(null!=queryModel){
+					String where="";
+					if(null!=queryModel.getworkflow_id()){
+						where+=" and WORKFLOW_ID=?";
+						params.add(queryModel.getworkflow_id());
+					}
+					if(null!=queryModel.getdescription()){
+						where+=" and DESCRIPTION LIKE ?";
+						params.add("%"+queryModel.getdescription()+"%");
+					}
+					scriptItemModel.setSqlWhere(where);
+                }
+				scriptItemModel.setParams(params.toArray());
+			}
+		};
+		queryModel.dataParamsHandler=dataParamsHandler;
+		Collection<IBaseModel> collection= SelectBaseData(DataContext.getCurrentConnection(),TDataEnterpriseOrderWorkflowModel.class,scriptItemModel,pagingOptions,queryModel);
+		Collection<TDataEnterpriseOrderWorkflowDtoModel> models=new ArrayList<>();
+		for (IBaseModel b : collection){
+			TDataEnterpriseOrderWorkflowDtoModel dto=new TDataEnterpriseOrderWorkflowDtoModel();
+			BeanUtils.copyProperties((TDataEnterpriseOrderWorkflowModel)b,dto);
 			models.add(dto);
         }
         return models;

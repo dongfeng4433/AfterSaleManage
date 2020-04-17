@@ -55,39 +55,13 @@ var vm = new Vue({
                 }]
             },
 
-            tableData: [{
-                date: '2016-05-03',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-02',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-04',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-01',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-08',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-06',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-07',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }],
+            tableData: [],
             multipleSelection: [],
             showEdit: [], //显示编辑框
             showBtn: [],
-            showBtnOrdinary: true
+            showBtnOrdinary: true,
+            goods:[],
+            warehouses:[]
         };
     },
     components: {
@@ -95,8 +69,62 @@ var vm = new Vue({
     },
     mounted: function () {
         this.getDataList(true);
+        this.loadSelectData();
+        this.loadSelectData4Warehouse();
     },
     methods: {
+        loadSelectData:function(){
+            let _vue = this;
+            let url = js.Web.GenerateUrl("TDataEnterpriseGoods", "search");
+            let params = {};
+
+            let loading = control.loading(this);
+            js.Web.AjaxRequest(this, url, params, null,
+                function (success, data) {
+                    loading.close();
+                    if (data.success === true) {
+                        if(data.rows){
+                            _vue.goods=data.rows;
+                        }
+                    }
+                }, function (success, data) {
+                    loading.close();
+                    if(data.loginStatus === 401) {
+                        _vue.$message.error('请重新登录！');
+                        setTimeout(function () {
+                            control.signOut(_vue);
+                        },1500)
+                    }else {
+                        _vue.$message.error(data.msg);
+                    }
+                }, true, false, true)
+        },
+        loadSelectData4Warehouse:function(){
+            let _vue = this;
+            let url = js.Web.GenerateUrl("TDataEnterpriseWarehouse", "search");
+            let params = {};
+
+            let loading = control.loading(this);
+            js.Web.AjaxRequest(this, url, params, null,
+                function (success, data) {
+                    loading.close();
+                    if (data.success === true) {
+                        if(data.rows){
+                            _vue.warehouses=data.rows;
+                        }
+                    }
+                }, function (success, data) {
+                    loading.close();
+                    if(data.loginStatus === 401) {
+                        _vue.$message.error('请重新登录！');
+                        setTimeout(function () {
+                            control.signOut(_vue);
+                        },1500)
+                    }else {
+                        _vue.$message.error(data.msg);
+                    }
+                }, true, false, true)
+        },
         // 获取列表
         getDataList: function (judge) {
             var _vue = this;
@@ -241,6 +269,7 @@ var vm = new Vue({
                 }, true, false, true)
         },
         addOrderDetailsBtn: function (judge, row) {
+            let _vue=this;
             this.title2 = judge ? '编辑' : '添加';
             if (!judge) {
                 this.order_id = '';
@@ -274,28 +303,43 @@ var vm = new Vue({
                     order_status: row.order_status,
 
                 };
+
+                let url= js.Web.GenerateUrl("TDataEnterpriseOrder", "searchOrderDetails");
+                let loading = control.loading(this);
+                js.Web.AjaxRequest(this, url, {order_id:this.order_id}, null,
+                    function (success, data) {
+                        loading.close();
+                        if (data.success === true) {
+                            _vue.tableData = data.rows;
+                        }
+                    }, function (success, data) {
+                        loading.close();
+                        if(data.loginStatus === 401) {
+                            _vue.$message.error('请重新登录！');
+                            setTimeout(function () {
+                                control.signOut(_vue);
+                            },1500)
+                        }else {
+                            _vue.$message.error(data.msg);
+                        }
+                    }, true, false, true)
             }
             this.isAddDetails = true;
         },
         addOrderDetails: function () {
-            var _vue = this;
-            var url = js.Web.GenerateUrl("TDataEnterpriseOrder", "saveOrderDetails");
-            var params = this.params;
+            let _vue = this;
+            let url = js.Web.GenerateUrl("TDataEnterpriseOrder", "saveOrderDetails");
+            let params = {};
             // 编辑
             if (this.order_id) {
                 params.order_id = this.order_id;
             }
-
-            if(!params.name.replace(/(^\s*)|(\s*$)/g, "")) {
-                this.$message.warning('请填写联系电话');
+            params.details=this.tableData;
+            if(this.tableData.length===0){
+                this.$message.warning('请录入明细数据');
                 return;
             }
-            if(!params.customer_id.replace(/(^\s*)|(\s*$)/g, "")) {
-                this.$message.warning('请填写联系电话');
-                return;
-            }
-
-            var loading = control.loading(this);
+            let loading = control.loading(this);
             js.Web.AjaxRequest(this, url, params, null,
                 function (success, data) {
                     loading.close();
@@ -348,6 +392,49 @@ var vm = new Vue({
         //点击删除
         handleDelete(index, row) {
             this.tableData.splice(index, 1);
+        },
+        handleAddRow(){
+            this.tableData.push({order_details_id:this.uuid()});
+        },
+        handleGoodsChange(row,goods_id){
+            // console.log(row);
+            // console.log(goods_id);
+            for(let i=0;i<this.goods.length;i++){
+                let o=this.goods[i];
+                if(o.goods_id===goods_id){
+                    row.name=o.name;
+                    row.unit_name=o.unit_id;
+                    row.quantity=1;
+                    break;
+                }
+            }
+            // console.log(row);
+        },
+        handleWarehouseChange(row,warehouse_id){
+            // console.log(row);
+            console.log(warehouse_id);
+            for(let i=0;i<this.warehouses.length;i++){
+                let o=this.warehouses[i];
+                if(o.warehouse_id===warehouse_id){
+                    row.warehouse_id=o.warehouse_id;
+                    break;
+                }
+            }
+            console.log(row);
+        },
+        uuid() {
+            var s = [];
+            var hexDigits = "0123456789abcdef";
+            for (var i = 0; i < 36; i++) {
+                s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+            }
+            s[14] = "4";
+            s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);
+            s[8] = s[13] = s[18] = s[23] = "";//"-";
+
+            this.uuidA = s.join("");
+            console.log(s.join(""), 's.join("")');
+            return this.uuidA;
         },
     }
 });

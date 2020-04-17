@@ -155,7 +155,7 @@ public class TDataEnterpriseGoodsController  extends BaseController{
 		dataService.disposeInCurrentThread();
 		return new ResponseEntity<>(baseResultModel, HttpStatus.OK);
 	}
-	
+
 
 }
 

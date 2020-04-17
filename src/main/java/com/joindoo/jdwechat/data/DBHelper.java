@@ -239,7 +239,23 @@ public final class DBHelper {
         return result;
     }
 
-
+    public static int executeNonQuery(Connection conn ,String sql, Object... obj) {
+        int result = 0;
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            for (int i = 0; i < obj.length; i++) {
+                pstmt.setObject(i + 1, obj[i]);
+            }
+            result = pstmt.executeUpdate();
+        } catch (SQLException err) {
+            err.printStackTrace();
+            free(null, pstmt, null);
+        } finally {
+            free(null, pstmt, null);
+        }
+        return result;
+    }
 
     /**
 

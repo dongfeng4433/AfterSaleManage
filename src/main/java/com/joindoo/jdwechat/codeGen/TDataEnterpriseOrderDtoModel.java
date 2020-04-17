@@ -8,4 +8,13 @@ import java.util.*;
 */
 
 public class TDataEnterpriseOrderDtoModel extends com.joindoo.jdwechat.codeGen.beans.TDataEnterpriseOrderDtoModel{
+    public List<TDataEnterpriseOrder2GoodsDtoModel> details;
+
+    public List<TDataEnterpriseOrder2GoodsDtoModel> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<TDataEnterpriseOrder2GoodsDtoModel> details) {
+        this.details = details;
+    }
 }
