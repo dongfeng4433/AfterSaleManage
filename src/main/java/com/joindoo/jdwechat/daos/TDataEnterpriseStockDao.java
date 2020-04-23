@@ -15,7 +15,7 @@ import java.util.List;
 * 主数据 - 企业 - 库存每个企业自身的货品配件库存数据
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/5.
+* Memo: Auto Created by CodeGenerator on 2020/4/20.
 */
 
 public class TDataEnterpriseStockDao extends BaseDao {

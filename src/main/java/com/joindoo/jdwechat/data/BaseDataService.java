@@ -231,6 +231,18 @@ public class BaseDataService extends com.joindoo.jdwechat.data.EdenDataService {
 						where+=" and ORDER_DETAILS_ID=?";
 						params.add(queryModel.getorder_details_id());
 					}
+					if(null!=queryModel.getorder_id()){
+						where+=" and ORDER_ID=?";
+						params.add(queryModel.getorder_id());
+					}
+					if(null!=queryModel.getgoods_id()){
+						where+=" and GOODS_ID=?";
+						params.add(queryModel.getgoods_id());
+					}
+					if(null!=queryModel.getwarehouse_id()){
+						where+=" and WAREHOUSE_ID=?";
+						params.add(queryModel.getwarehouse_id());
+					}
 					scriptItemModel.setSqlWhere(where);
                 }
 				scriptItemModel.setParams(params.toArray());

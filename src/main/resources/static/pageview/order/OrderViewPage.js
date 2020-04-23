@@ -271,6 +271,7 @@ var vm = new Vue({
         addOrderDetailsBtn: function (judge, row) {
             let _vue=this;
             this.title2 = judge ? '编辑' : '添加';
+            _vue.tableData=[];
             if (!judge) {
                 this.order_id = '';
 
@@ -306,7 +307,7 @@ var vm = new Vue({
 
                 let url= js.Web.GenerateUrl("TDataEnterpriseOrder", "searchOrderDetails");
                 let loading = control.loading(this);
-                js.Web.AjaxRequest(this, url, {order_id:this.order_id}, null,
+                js.Web.AjaxRequest(this, url, {order_id:row.order_id}, null,
                     function (success, data) {
                         loading.close();
                         if (data.success === true) {

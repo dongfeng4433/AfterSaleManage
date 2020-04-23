@@ -15,7 +15,7 @@ import java.util.List;
 * 主数据 - 企业 -  标签 - 2 - 客户 由企业管理员自身维护，主要用于对客户进行自定义分类
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/5.
+* Memo: Auto Created by CodeGenerator on 2020/4/20.
 */
 
 public class TDataTag2CustomerDao extends BaseDao {

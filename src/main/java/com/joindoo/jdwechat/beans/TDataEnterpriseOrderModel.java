@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 * 主数据 - 企业 - 工单 
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/5.
+* Memo: Auto Created by CodeGenerator on 2020/4/20.
 */
 
 public class TDataEnterpriseOrderModel extends BaseModel implements IBaseModel{

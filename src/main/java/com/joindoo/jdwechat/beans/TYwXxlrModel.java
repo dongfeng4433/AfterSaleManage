@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 * 业务_信息录入
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/5.
+* Memo: Auto Created by CodeGenerator on 2020/4/20.
 */
 
 public class TYwXxlrModel extends BaseModel implements IBaseModel{

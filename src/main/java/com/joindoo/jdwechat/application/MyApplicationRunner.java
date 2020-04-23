@@ -3,6 +3,7 @@ package com.joindoo.jdwechat.application;
 import com.joindoo.jdwechat.SystemSetting;
 import com.joindoo.jdwechat.beans.BaseModel;
 import com.joindoo.jdwechat.cache.PersonCacheModel;
+import com.joindoo.jdwechat.daos.TDataEnterpriseConfigDao;
 import com.joindoo.jdwechat.daos.TXtAqZhxxDao;
 import com.joindoo.jdwechat.daos.TXtWxyhDao;
 import com.joindoo.jdwechat.data.DBHelper;
@@ -66,8 +67,9 @@ public class MyApplicationRunner implements ApplicationRunner {
         List<BaseModel> zhxxList= zhxxDao.findAll("sfyx_bj =1");
         TXtWxyhDao wxyhDao=new TXtWxyhDao(dataContext);
         List<BaseModel> list= wxyhDao.findAll("is_valid =1");
-
-        SystemSetting.JD_ServerCache.initializeBaseData(personCacheModels,zhxxList,list);
+        TDataEnterpriseConfigDao configDao=new TDataEnterpriseConfigDao(dataContext);
+        List<BaseModel> configList=configDao.findAll("is_valid = 1");
+        SystemSetting.JD_ServerCache.initializeBaseData(personCacheModels,zhxxList,list,configList);
         dataContext.release();
     }
 }

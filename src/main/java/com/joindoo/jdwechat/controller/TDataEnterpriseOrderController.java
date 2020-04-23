@@ -225,6 +225,7 @@ public class TDataEnterpriseOrderController  extends BaseController{
 			resultListModel.setMsg("参数有误");
 			return new ResponseEntity<>(resultListModel, HttpStatus.OK);
 		}
+		logger.info(queryModel.getorder_id());
         //归属企业查询
 //        fillQueryModel4Crop(dataContext,queryModel,sessionModel);
         if(pagingOptions.getPageSize()==0)pagingOptions.setPageSize(20);

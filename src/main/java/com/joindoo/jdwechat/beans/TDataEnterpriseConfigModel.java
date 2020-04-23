@@ -8,40 +8,24 @@ import java.sql.Timestamp;
 import java.util.*;
 import java.math.BigDecimal;
 /**
-* 主数据 - 企业 -  标签 - 2 - 客户 由企业管理员自身维护，主要用于对客户进行自定义分类
+* 主数据 - 企业 - 配置  企业的相关配置，比如钉钉相关的id和key
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
 * Memo: Auto Created by CodeGenerator on 2020/4/20.
 */
 
-public class TDataTag2CustomerModel extends BaseModel implements IBaseModel{
-	 public static final String TABLE_NAME="T_DATA_TAG_2_CUSTOMER";
-	 public static final String SCRIPT_INSERT="INSERT INTO t_data_tag_2_customer(tag_id,customer_id,enterprise_id,name,short_name,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id)VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-	 public static final String SCRIPT_DELETE="DELETE FROM t_data_tag_2_customer WHERE  tag_id=? AND customer_id=? ";
-	 public static final String SCRIPT_UPDATE="UPDATE t_data_tag_2_customer  SET {0} WHERE  tag_id=? AND customer_id=? ";
-	 public static final String SCRIPT_SELECT="SELECT tag_id,customer_id,enterprise_id,name,short_name,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id FROM t_data_tag_2_customer WHERE (1=1)";
+public class TDataEnterpriseConfigModel extends BaseModel implements IBaseModel{
+	 public static final String TABLE_NAME="T_DATA_ENTERPRISE_CONFIG";
+	 public static final String SCRIPT_INSERT="INSERT INTO t_data_enterprise_config(enterprise_id,config_code,config_name,config_value,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id)VALUES(?,?,?,?,?,?,?,?,?,?)";
+	 public static final String SCRIPT_DELETE="DELETE FROM t_data_enterprise_config WHERE  enterprise_id=? AND config_code=? ";
+	 public static final String SCRIPT_UPDATE="UPDATE t_data_enterprise_config  SET {0} WHERE  enterprise_id=? AND config_code=? ";
+	 public static final String SCRIPT_SELECT="SELECT enterprise_id,config_code,config_name,config_value,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id FROM t_data_enterprise_config WHERE (1=1)";
 	 public String getDataTableName() {
  	 return TABLE_NAME;
 	 }
 
 
-	/*标签id*/ 
-	protected String tag_id;
-	public String gettag_id (){ return tag_id;}
-	public void settag_id(String value){
-		this.tag_id=value;
- 		this.onChangeProperty("tag_id",this.tag_id,value);
- 	}
-
-	/*客户id*/ 
-	protected String customer_id;
-	public String getcustomer_id (){ return customer_id;}
-	public void setcustomer_id(String value){
-		this.customer_id=value;
- 		this.onChangeProperty("customer_id",this.customer_id,value);
- 	}
-
-	/*企业id（冗余字段）*/ 
+	/*企业id*/ 
 	protected String enterprise_id;
 	public String getenterprise_id (){ return enterprise_id;}
 	public void setenterprise_id(String value){
@@ -49,20 +33,28 @@ public class TDataTag2CustomerModel extends BaseModel implements IBaseModel{
  		this.onChangeProperty("enterprise_id",this.enterprise_id,value);
  	}
 
-	/*名称*/ 
-	protected String name;
-	public String getname (){ return name;}
-	public void setname(String value){
-		this.name=value;
- 		this.onChangeProperty("name",this.name,value);
+	/*代码*/ 
+	protected String config_code;
+	public String getconfig_code (){ return config_code;}
+	public void setconfig_code(String value){
+		this.config_code=value;
+ 		this.onChangeProperty("config_code",this.config_code,value);
  	}
 
-	/*简称*/ 
-	protected String short_name;
-	public String getshort_name (){ return short_name;}
-	public void setshort_name(String value){
-		this.short_name=value;
- 		this.onChangeProperty("short_name",this.short_name,value);
+	/*名称*/ 
+	protected String config_name;
+	public String getconfig_name (){ return config_name;}
+	public void setconfig_name(String value){
+		this.config_name=value;
+ 		this.onChangeProperty("config_name",this.config_name,value);
+ 	}
+
+	/*配置项值*/ 
+	protected String config_value;
+	public String getconfig_value (){ return config_value;}
+	public void setconfig_value(String value){
+		this.config_value=value;
+ 		this.onChangeProperty("config_value",this.config_value,value);
  	}
 
 	/*企业介绍*/ 
@@ -115,19 +107,18 @@ public class TDataTag2CustomerModel extends BaseModel implements IBaseModel{
 
 
 
-	public TDataTag2CustomerModel(){
+	public TDataEnterpriseConfigModel(){
 		super();
-		this._keyProperty.add("tag_id");
-		this._keyProperty.add("customer_id");
+		this._keyProperty.add("enterprise_id");
+		this._keyProperty.add("config_code");
 		initFieldsType();
 	}
 
 	private void initFieldsType(){
-		this._fieldType.put("tag_id","String");
-		this._fieldType.put("customer_id","String");
 		this._fieldType.put("enterprise_id","String");
-		this._fieldType.put("name","String");
-		this._fieldType.put("short_name","String");
+		this._fieldType.put("config_code","String");
+		this._fieldType.put("config_name","String");
+		this._fieldType.put("config_value","String");
 		this._fieldType.put("description","String");
 		this._fieldType.put("is_valid","Integer");
 		this._fieldType.put("create_time","Date");
@@ -142,20 +133,17 @@ public class TDataTag2CustomerModel extends BaseModel implements IBaseModel{
 	@Override
 	public void fillModel(ResultSet resultSet) {
 		try { 
-		 if(isExistColumn(resultSet,"tag_id")){
-			 this.tag_id=resultSet.getString("tag_id");
-		}
-		 if(isExistColumn(resultSet,"customer_id")){
-			 this.customer_id=resultSet.getString("customer_id");
-		}
 		 if(isExistColumn(resultSet,"enterprise_id")){
 			 this.enterprise_id=resultSet.getString("enterprise_id");
 		}
-		 if(isExistColumn(resultSet,"name")){
-			 this.name=resultSet.getString("name");
+		 if(isExistColumn(resultSet,"config_code")){
+			 this.config_code=resultSet.getString("config_code");
 		}
-		 if(isExistColumn(resultSet,"short_name")){
-			 this.short_name=resultSet.getString("short_name");
+		 if(isExistColumn(resultSet,"config_name")){
+			 this.config_name=resultSet.getString("config_name");
+		}
+		 if(isExistColumn(resultSet,"config_value")){
+			 this.config_value=resultSet.getString("config_value");
 		}
 		 if(isExistColumn(resultSet,"description")){
 			 this.description=resultSet.getString("description");
@@ -182,14 +170,14 @@ public class TDataTag2CustomerModel extends BaseModel implements IBaseModel{
   @Override
    public String getExist() {
 	    String sql="select 1 from "+TABLE_NAME;
-		    sql+=" where   tag_id="+Utility.getSqlFielStatement("string",this.tag_id)+" and customer_id="+Utility.getSqlFielStatement("string",this.customer_id)+"  ";
+		    sql+=" where   enterprise_id="+Utility.getSqlFielStatement("string",this.enterprise_id)+" and config_code="+Utility.getSqlFielStatement("string",this.config_code)+"  ";
 	    return sql;
    }
 
 
    @Override
    public String getInsert() {
-       String sql="insert into "+TABLE_NAME+"(tag_id,customer_id,enterprise_id,name,short_name,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id) values("+Utility.getSqlFielStatement("string",this.tag_id)+","+Utility.getSqlFielStatement("string",this.customer_id)+","+Utility.getSqlFielStatement("string",this.enterprise_id)+","+Utility.getSqlFielStatement("string",this.name)+","+Utility.getSqlFielStatement("string",this.short_name)+","+Utility.getSqlFielStatement("string",this.description)+","+this.is_valid+","+Utility.getSqlFielStatement("date",this.create_time)+","+Utility.getSqlFielStatement("date",this.last_edit_time)+","+Utility.getSqlFielStatement("string",this.creation_user_id)+","+Utility.getSqlFielStatement("string",this.last_edit_user_id)+")";
+       String sql="insert into "+TABLE_NAME+"(enterprise_id,config_code,config_name,config_value,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id) values("+Utility.getSqlFielStatement("string",this.enterprise_id)+","+Utility.getSqlFielStatement("string",this.config_code)+","+Utility.getSqlFielStatement("string",this.config_name)+","+Utility.getSqlFielStatement("string",this.config_value)+","+Utility.getSqlFielStatement("string",this.description)+","+this.is_valid+","+Utility.getSqlFielStatement("date",this.create_time)+","+Utility.getSqlFielStatement("date",this.last_edit_time)+","+Utility.getSqlFielStatement("string",this.creation_user_id)+","+Utility.getSqlFielStatement("string",this.last_edit_user_id)+")";
        return sql;
    }
 
@@ -210,7 +198,7 @@ public class TDataTag2CustomerModel extends BaseModel implements IBaseModel{
    sql=sql.substring(0,sql.length()-1);
    else
        return "";
-   sql+= " where  tag_id="+Utility.getSqlFielStatement("string",this.tag_id)+" and customer_id="+Utility.getSqlFielStatement("string",this.customer_id)+" ";
+   sql+= " where  enterprise_id="+Utility.getSqlFielStatement("string",this.enterprise_id)+" and config_code="+Utility.getSqlFielStatement("string",this.config_code)+" ";
    }
    return sql;
 }
@@ -218,15 +206,15 @@ public class TDataTag2CustomerModel extends BaseModel implements IBaseModel{
 
 	@Override
 	public String getSelect() {
-		String sql="select tag_id,customer_id,enterprise_id,name,short_name,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id from "+TABLE_NAME;
-		if(!Utility.isNullOrEmpty(tag_id)&&!Utility.isNullOrEmpty(customer_id)){
-			sql+=" where  tag_id="+Utility.getSqlFielStatement("string",this.tag_id)+" and customer_id="+Utility.getSqlFielStatement("string",this.customer_id)+" ";
+		String sql="select enterprise_id,config_code,config_name,config_value,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id from "+TABLE_NAME;
+		if(!Utility.isNullOrEmpty(enterprise_id)&&!Utility.isNullOrEmpty(config_code)){
+			sql+=" where  enterprise_id="+Utility.getSqlFielStatement("string",this.enterprise_id)+" and config_code="+Utility.getSqlFielStatement("string",this.config_code)+" ";
 		}
 		return sql;
 	}
 	@Override
 	public String getSelectByCondition(String condition) {
-		String sql="select tag_id,customer_id,enterprise_id,name,short_name,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id from "+TABLE_NAME;
+		String sql="select enterprise_id,config_code,config_name,config_value,description,is_valid,create_time,last_edit_time,creation_user_id,last_edit_user_id from "+TABLE_NAME;
 		if(condition!=null&&condition!=""){
 			sql+=" where "+condition;
 		}
@@ -236,7 +224,7 @@ public class TDataTag2CustomerModel extends BaseModel implements IBaseModel{
 
     @Override
    public String getDelete() {
-	 String sql="delete from "+TABLE_NAME+" where  tag_id="+Utility.getSqlFielStatement("string",this.tag_id)+" and customer_id="+Utility.getSqlFielStatement("string",this.customer_id)+" ";
+	 String sql="delete from "+TABLE_NAME+" where  enterprise_id="+Utility.getSqlFielStatement("string",this.enterprise_id)+" and config_code="+Utility.getSqlFielStatement("string",this.config_code)+" ";
 	 return sql;
    }
 

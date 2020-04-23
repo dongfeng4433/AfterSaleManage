@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/5.
+* Memo: Auto Created by CodeGenerator on 2020/4/20.
 */
 
 public class TDmSqlxModel extends BaseModel implements IBaseModel{

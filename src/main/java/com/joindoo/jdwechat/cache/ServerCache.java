@@ -45,6 +45,8 @@ public class ServerCache {
     private ConcurrentHashMap<String,TXtGySqDtoModel> tXtGySqDtoModelConcurrentHashMap;
     private ConcurrentHashMap<String,TXtGyJdDtoModel> tXtGyJdDtoModelConcurrentHashMap;
 
+    private ConcurrentHashMap<String,List<TDataEnterpriseConfigModel>> enterpriseConfigModelConcurrentHashMap;
+
     public ServerCache() {
         this.initialCapacity = 10 * 1024;
         this.loadFactor = (float) 0.75;
@@ -58,9 +60,12 @@ public class ServerCache {
         this.tXtGyQzDtoModelConcurrentHashMap=new ConcurrentHashMap<>(this.initialCapacity,this.loadFactor);
         this.tXtGyJdDtoModelConcurrentHashMap=new ConcurrentHashMap<>();
         this.tXtGySqDtoModelConcurrentHashMap=new ConcurrentHashMap<>();
+
+        this.enterpriseConfigModelConcurrentHashMap=new ConcurrentHashMap<>();
     }
 
-    public void initializeBaseData(List<PersonCacheModel> personCacheModels,List<BaseModel> zhxxList, List<BaseModel> wxyhList) {
+    public void initializeBaseData(List<PersonCacheModel> personCacheModels,List<BaseModel> zhxxList, List<BaseModel> wxyhList,
+                                   List<BaseModel> configList) {
         log.info("更新系统缓存中...");
         if(personCacheModels.size()>0){
             for(PersonCacheModel cacheModel:personCacheModels){
@@ -83,6 +88,20 @@ public class ServerCache {
             for (BaseModel baseModel:wxyhList){
                 TXtWxyhModel model=(TXtWxyhModel)baseModel;
                 this.wxyhModelConcurrentHashMap.put(model.getopenid(),model);
+            }
+        }
+
+        if(configList.size()>0){
+            for(BaseModel baseModel:configList){
+                TDataEnterpriseConfigModel model=(TDataEnterpriseConfigModel)baseModel;
+                if(this.enterpriseConfigModelConcurrentHashMap.containsKey(model.getenterprise_id())){
+                    this.enterpriseConfigModelConcurrentHashMap.get(model.getenterprise_id()).add(model);
+                }else{
+                    List<TDataEnterpriseConfigModel> list=new ArrayList<>();
+                    list.add(model);
+                    this.enterpriseConfigModelConcurrentHashMap.put(model.getenterprise_id(),list);
+                }
+
             }
         }
         log.info("更新系统缓存结束");
@@ -238,5 +257,11 @@ public class ServerCache {
             dtoModels.add(dtoModel);
         }
         return dtoModels;
+    }
+
+    public List<TDataEnterpriseConfigModel> getCorpConfig(String enterprise_id){
+        if(this.enterpriseConfigModelConcurrentHashMap.containsKey(enterprise_id))
+            return this.enterpriseConfigModelConcurrentHashMap.get(enterprise_id);
+        return null;
     }
 }

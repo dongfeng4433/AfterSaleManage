@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 * 通讯 - 通知提醒记录 - 2 - 人员， 记录通知的人员信息
 * Author: zhuqiang4433@gmail.com
 * Version: CodeGenerator 1.1
-* Memo: Auto Created by CodeGenerator on 2020/4/5.
+* Memo: Auto Created by CodeGenerator on 2020/4/20.
 */
 
 public class TTxTztxjl2RyModel extends BaseModel implements IBaseModel{

@@ -16,6 +16,10 @@ public class UserCacheModel {
     private Date ssoTime;//单点登录请求时间
     private String accountType;
     private String enterprise_id;//归属企业id
+    private String applet_jd_token;//小程序登录token
+    private String applet_user_id;
+    private String applet_user_name;
+    private String applet_user_mobile;
 
 
     public String getSalt() {
@@ -96,6 +100,38 @@ public class UserCacheModel {
 
     public void setEnterprise_id(String enterprise_id) {
         this.enterprise_id = enterprise_id;
+    }
+
+    public String getApplet_jd_token() {
+        return applet_jd_token;
+    }
+
+    public void setApplet_jd_token(String applet_jd_token) {
+        this.applet_jd_token = applet_jd_token;
+    }
+
+    public String getApplet_user_id() {
+        return applet_user_id;
+    }
+
+    public void setApplet_user_id(String applet_user_id) {
+        this.applet_user_id = applet_user_id;
+    }
+
+    public String getApplet_user_name() {
+        return applet_user_name;
+    }
+
+    public void setApplet_user_name(String applet_user_name) {
+        this.applet_user_name = applet_user_name;
+    }
+
+    public String getApplet_user_mobile() {
+        return applet_user_mobile;
+    }
+
+    public void setApplet_user_mobile(String applet_user_mobile) {
+        this.applet_user_mobile = applet_user_mobile;
     }
 
     public void fillModel(){
